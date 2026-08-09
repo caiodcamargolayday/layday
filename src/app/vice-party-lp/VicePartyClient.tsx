@@ -192,6 +192,9 @@ export function VicePartyClient() {
             <h1 className="text-5xl sm:text-6xl md:text-8xl font-heading text-white tracking-widest leading-none drop-shadow-[0_0_15px_rgba(255,20,147,0.5)]">
               VICE <span className="text-[#E72C7F]">PARTY</span>
             </h1>
+            <p className="text-lg md:text-xl font-bold text-white tracking-[2px] md:tracking-[4px] uppercase mt-2 mb-4">
+              Get <span className="text-[#E72C7F]">2 Free Drinks</span> when you join the guest list
+            </p>
             <Dialog onOpenChange={(open) => { if (!open) setIsSuccess(false); }}>
               <DialogTrigger render={
                 <Button className="bg-[#E72C7F] text-white hover:bg-white hover:text-[#E72C7F] rounded-none h-14 md:h-16 px-8 md:px-16 font-bold uppercase tracking-[4px] text-sm md:text-base transition-all duration-500 shadow-[0_0_30px_rgba(255,20,147,0.6)] hover:scale-105" />
@@ -368,6 +371,9 @@ export function VicePartyClient() {
             <h2 className="text-4xl md:text-7xl font-heading text-white tracking-[6px] md:tracking-[12px] uppercase leading-none drop-shadow-[0_0_15px_rgba(255,20,147,0.3)]">
               JOIN THE <span className="text-[#E72C7F]">MADNESS</span>
             </h2>
+            <p className="text-lg md:text-xl font-bold text-white tracking-[2px] md:tracking-[4px] uppercase mt-2 mb-4">
+              Get <span className="text-[#E72C7F]">2 Free Drinks</span> when you join the guest list
+            </p>
             <Dialog onOpenChange={(open) => { if (!open) setIsSuccess(false); }}>
               <DialogTrigger render={
                 <Button className="bg-[#E72C7F] text-white hover:bg-white hover:text-[#E72C7F] rounded-none h-14 md:h-16 px-12 md:px-16 font-bold uppercase tracking-[4px] text-sm md:text-base transition-all duration-500 shadow-[0_0_40px_rgba(255,20,147,0.5)] hover:scale-105" />
