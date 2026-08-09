@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 const HERO_IMAGES = [
-  "/vice_party_pictures/LDU-Vice Pool Party-IGF-ESSAR & URI.jpg",
+  "/vice_party_pictures/LDU-Vice Pool Party-IGF-GLANDO.jpg",
   "/vice_party_pictures/LDU-Vice Pool Party-IGF-Jaka.jpg"
 ];
 
@@ -250,8 +250,8 @@ export function VicePartyClient() {
             <h2 className="text-3xl md:text-5xl font-heading tracking-widest uppercase text-white/90">WATCH THE <span className="text-[#E72C7F]">MADNESS</span></h2>
           </div>
           <div className="flex flex-col sm:flex-row justify-center items-center gap-10 md:gap-16">
-            <VideoPlayer src="/vice_party_pictures/vice_party.mp4" />
-            <VideoPlayer src="/vice_party_pictures/vice_jaka.mp4" />
+            <VideoPlayer src="/vice_party_pictures/LDU-Vice Pool Party-Motion (GLANDO).mp4" />
+            <VideoPlayer src="/vice_party_pictures/LDU-Vice Pool Party-Motion (JAKA).mp4" />
           </div>
         </div>
       </section>
