@@ -8,6 +8,7 @@ import {
   Utensils, Coffee, Waves, Wifi, Dumbbell, Map as MapIcon, Umbrella, Languages, Luggage, Beer, DoorClosed, Wind, Plug, Lock, Lightbulb, PartyPopper, Bath, Bed, LockKeyhole, MapPin, ChevronLeft, ChevronRight, X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { openCloudbedsBooking } from "@/lib/tracking";
 
 const ASSETS = {
   hero: "/layday_gilit/hero_gilit_oficial.jpeg",
@@ -100,25 +101,7 @@ export function GiliTClient() {
   const containerRef = useRef(null);
 
   const handleBooking = () => {
-    if (typeof window !== "undefined") {
-      if ((window as any).fbq) {
-        (window as any).fbq('track', 'InitiateCheckout');
-      }
-      localStorage.setItem("booking_origin", "gilit");
-      
-      const baseUrl = "https://hotels.cloudbeds.com/en/reservation/4fbPDV?currency=idr";
-      const url = new URL(baseUrl);
-      const incoming = new URLSearchParams(window.location.search);
-      const keep = ['gclid', 'gbraid', 'wbraid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'fbclid'];
-      
-      keep.forEach(k => {
-        if (incoming.has(k)) {
-          url.searchParams.set(k, incoming.get(k)!);
-        }
-      });
-      
-      window.open(url.toString(), "_blank");
-    }
+    openCloudbedsBooking("gilit");
   };
 
   useEffect(() => {

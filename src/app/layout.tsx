@@ -19,6 +19,7 @@ import { Suspense } from "react";
 import { MetaPixel } from "@/components/layout/MetaPixel";
 import { GoogleAdsPixel } from "@/components/layout/GoogleAdsPixel";
 import { GoogleAnalyticsPixel } from "@/components/layout/GoogleAnalyticsPixel";
+import { GoogleTagManager } from "@/components/layout/GoogleTagManager";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -38,6 +39,7 @@ export default function RootLayout({
           <MetaPixel />
           <GoogleAdsPixel />
           <GoogleAnalyticsPixel />
+          <GoogleTagManager />
         </Suspense>
         <ConditionalShell>
           <PageTransition>

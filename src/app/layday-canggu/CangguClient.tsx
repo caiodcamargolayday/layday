@@ -9,6 +9,7 @@ import {
   Lightbulb, PartyPopper, Bath, ChevronLeft, ChevronRight, X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { openCloudbedsBooking } from "@/lib/tracking";
 
 const ASSETS = {
   hero: "/lay_day_canggu/beach 2.jpeg",
@@ -204,10 +205,7 @@ export function CangguClient() {
             </p>
             <div className="flex flex-col items-center">
               <Button
-                onClick={() => {
-                  localStorage.setItem("booking_origin", "canggu");
-                  window.open("https://hotels.cloudbeds.com/en/reservation/idPO4I?currency=idr", "_blank");
-                }}
+                onClick={() => openCloudbedsBooking("canggu")}
                 className="bg-[#EE5B2B] text-white hover:bg-white hover:text-[#004A61] rounded-none h-12 px-10 font-bold uppercase tracking-[3px] text-xs transition-all duration-500 shadow-xl mb-6">
                 BOOK THE LEGEND
               </Button>
@@ -506,10 +504,7 @@ export function CangguClient() {
               LIVE THE <span className="text-[#EE5B2B]">VIBE</span>
             </h2>
             <Button
-              onClick={() => {
-                localStorage.setItem("booking_origin", "canggu");
-                window.open("https://hotels.cloudbeds.com/en/reservation/idPO4I?currency=idr", "_blank");
-              }}
+              onClick={() => openCloudbedsBooking("canggu")}
               className="bg-[#EE5B2B] text-white hover:bg-white hover:text-[#004A61] rounded-none h-12 px-12 font-bold uppercase tracking-[4px] text-[10px] transition-all duration-500">
               BOOK NOW
             </Button>

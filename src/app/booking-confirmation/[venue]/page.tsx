@@ -2,9 +2,9 @@
 
 import { useEffect, Suspense } from 'react';
 import { useSearchParams, useParams } from 'next/navigation';
-
 import { CheckCircle2, Home } from 'lucide-react';
 import Link from 'next/link';
+import { CLOUDBEDS_CONFIG, VenueKey } from '@/lib/tracking';
 
 function getCookie(name: string) {
   if (typeof document === 'undefined') return null;
@@ -15,11 +15,11 @@ function getCookie(name: string) {
 function ConfirmationLogic() {
   const searchParams = useSearchParams();
   const params = useParams();
-  const venue = params.venue as string;
+  const venue = (params.venue as string)?.toLowerCase() as VenueKey;
 
   useEffect(() => {
     const reservationId = searchParams.get('reservationId') || searchParams.get('reservation_id');
-    const total = searchParams.get('total') || searchParams.get('amount');
+    const total = searchParams.get('total') || searchParams.get('amount') || '0';
     const email = searchParams.get('email');
     const firstName = searchParams.get('firstName') || searchParams.get('first_name');
     const lastName = searchParams.get('lastName') || searchParams.get('last_name');
@@ -32,36 +32,79 @@ function ConfirmationLogic() {
     // Validate the venue from the URL path
     const validVenues = ["canggu", "gilit", "coday", "uluwatu"];
     if (!venue || !validVenues.includes(venue)) {
-      console.log("[CAPI] Ignored: Booking origin unknown or invalid venue.");
+      console.log("[Tracking] Ignored: Booking origin unknown or invalid venue.");
       return;
     }
 
     // Prevent double-firing on re-renders (use sessionStorage)
-    const firedKey = `capi_fired_${reservationId}`;
+    const firedKey = `booking_conversion_fired_${reservationId}`;
     if (sessionStorage.getItem(firedKey)) return;
     sessionStorage.setItem(firedKey, '1');
 
-    // Collect Meta cookies from browser
+    const totalValue = parseFloat(total) || 0;
+    const venueConfig = CLOUDBEDS_CONFIG[venue];
+
+    // 1. Fire Google Ads Browser Conversion (gtag)
+    if (typeof window !== 'undefined' && (window as any).gtag && venueConfig) {
+      if (venueConfig.googleAdsId && venueConfig.googleAdsLabel) {
+        (window as any).gtag('event', 'conversion', {
+          send_to: `${venueConfig.googleAdsId}/${venueConfig.googleAdsLabel}`,
+          value: totalValue,
+          currency: 'IDR',
+          transaction_id: reservationId,
+        });
+        console.log(`[Google Ads] Conversion event sent for ${venue}: ${venueConfig.googleAdsId}/${venueConfig.googleAdsLabel}`);
+      }
+    }
+
+    // 2. Push E-commerce Purchase to GTM dataLayer
+    if (typeof window !== 'undefined') {
+      (window as any).dataLayer = (window as any).dataLayer || [];
+      (window as any).dataLayer.push({
+        event: 'purchase',
+        venue: venue,
+        ecommerce: {
+          transaction_id: reservationId,
+          value: totalValue,
+          currency: 'IDR',
+          items: [{
+            item_id: reservationId,
+            item_name: `Reservation at ${venueConfig?.name || venue}`,
+            price: totalValue,
+            quantity: 1,
+          }],
+        },
+        user_data: {
+          email: email || undefined,
+          phone: phone || undefined,
+          first_name: firstName || undefined,
+          last_name: lastName || undefined,
+        }
+      });
+      console.log(`[GTM] E-commerce purchase pushed to dataLayer for ${venue}`);
+    }
+
+    // 3. Fire Meta Pixel Purchase
     const fbp = getCookie('_fbp');
     const fbc = getCookie('_fbc');
 
     if (typeof window !== 'undefined' && (window as any).fbq) {
       (window as any).fbq('track', 'Purchase', {
-        value: parseFloat(total || '0') || 0,
+        value: totalValue,
         currency: 'IDR',
         content_type: 'hotel',
       }, {
-        eventID: reservationId, // This eventID deduplicates with the Server CAPI event!
+        eventID: reservationId, // Deduplicates with Server CAPI event
       });
-      console.log(`[Pixel] Browser Purchase event sent for ${venue}`);
+      console.log(`[Meta Pixel] Browser Purchase event sent for ${venue}`);
     }
 
-    // Send to our API route
+    // 4. Send to Server-Side Meta CAPI
     fetch('/api/meta-capi/purchase', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        eventId: reservationId,         // Use reservation ID as event_id
+        eventId: reservationId,
         eventSourceUrl: window.location.href,
         fbp,
         fbc,
@@ -69,10 +112,10 @@ function ConfirmationLogic() {
         phone,
         firstName,
         lastName,
-        country: 'id',                  // Indonesia
-        value: parseFloat(total || '0') || 0,
+        country: 'id',
+        value: totalValue,
         orderId: reservationId,
-        origin: venue,                  // Send the specific venue from the URL!
+        origin: venue,
         testEventCode,
       }),
     })
@@ -101,7 +144,7 @@ export default function BookingConfirmationPage() {
             BOOKING <br className="md:hidden" /><span className="text-[#EE5B2B]">CONFIRMED</span>
           </h1>
           <p className="text-[#004A61]/70 font-bold text-xs md:text-sm leading-relaxed max-w-sm mx-auto uppercase tracking-[2px]">
-            You're all set. We can't wait to see you at the legend.
+            You&apos;re all set. We can&apos;t wait to see you at the legend.
           </p>
         </div>
         

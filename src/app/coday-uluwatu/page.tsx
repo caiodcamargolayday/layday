@@ -9,6 +9,7 @@ import {
   Flame, Snowflake, Coffee, Laptop, GlassWater, Sparkles, Refrigerator, Car
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { openCloudbedsBooking } from "@/lib/tracking";
 
 const ASSETS = {
   hero: "/coday_uluwatu/uluwatu_surfers_hero.png",
@@ -148,13 +149,7 @@ export default function CodayPage() {
             </p>
             <div className="flex flex-col items-center">
               <Button
-                onClick={() => {
-                  if (typeof window !== "undefined" && (window as any).fbq) {
-                    (window as any).fbq('track', 'InitiateCheckout');
-                  }
-                  localStorage.setItem("booking_origin", "coday");
-                  window.open("https://hotels.cloudbeds.com/en/reservation/WEE9oP?currency=idr", "_blank");
-                }}
+                onClick={() => openCloudbedsBooking("coday")}
                 className="bg-[#EE5B2B] text-white hover:bg-white hover:text-[#004A61] rounded-none h-12 px-10 font-bold uppercase tracking-[3px] text-xs transition-all duration-500 shadow-xl mb-6">
                 BOOK YOUR STAY
               </Button>
@@ -397,27 +392,22 @@ export default function CodayPage() {
         </section>
 
         {/* 8. Final CTA */}
-        <motion.section
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+        <motion.section 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="relative h-[40vh] md:h-[50vh] flex items-center justify-center text-center overflow-hidden"
+          transition={{ duration: 0.8 }}
+          className="relative h-[40vh] md:h-[50vh] flex items-center justify-center text-center overflow-hidden border-2 border-[#004A61] shadow-2xl"
         >
           <div className="absolute inset-0 z-0">
-            <Image src="/coday_uluwatu/co living 3.jpg" alt="Vibe" fill className="object-cover grayscale brightness-50" sizes="100vw" />
+            <Image src="/coday_uluwatu/for this 5.jpg" alt="Vibe" fill className="object-cover grayscale brightness-50" sizes="100vw" />
           </div>
           <div className="relative z-10 px-4 space-y-4">
             <h2 className="text-3xl md:text-6xl font-heading text-white tracking-[6px] md:tracking-[12px] uppercase leading-none">
               LIVE THE <span className="text-[#EE5B2B]">VIBE</span>
             </h2>
             <Button
-              onClick={() => {
-                if (typeof window !== "undefined" && (window as any).fbq) {
-                  (window as any).fbq('track', 'InitiateCheckout');
-                }
-                localStorage.setItem("booking_origin", "coday");
-                window.open("https://hotels.cloudbeds.com/en/reservation/WEE9oP?currency=idr", "_blank");
-              }}
+              onClick={() => openCloudbedsBooking("coday")}
               className="bg-[#EE5B2B] text-white hover:bg-white hover:text-[#004A61] rounded-none h-12 px-12 font-bold uppercase tracking-[4px] text-[10px] transition-all duration-500">
               BOOK NOW
             </Button>
@@ -426,7 +416,6 @@ export default function CodayPage() {
 
       </div>
 
-      {/* Destinations Modal */}
       <AnimatePresence>
         {isModalOpen && (
           <motion.div

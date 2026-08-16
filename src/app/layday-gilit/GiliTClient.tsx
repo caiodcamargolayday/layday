@@ -8,6 +8,7 @@ import {
   Utensils, Coffee, Waves, Wifi, Dumbbell, Map as MapIcon, Umbrella, Languages, Luggage, Beer, DoorClosed, Wind, Plug, Lock, Lightbulb, PartyPopper, Bath, Bed, LockKeyhole, MapPin, ChevronLeft, ChevronRight, X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { openCloudbedsBooking } from "@/lib/tracking";
 
 const ASSETS = {
   hero: "/layday_gilit/hero_gilit_oficial.jpeg",
@@ -153,10 +154,7 @@ export function GiliTClient() {
             </p>
             <div className="mt-10 md:mt-12 flex flex-col items-center">
               <Button 
-                onClick={() => {
-                  localStorage.setItem("booking_origin", "gilit");
-                  window.open("https://hotels.cloudbeds.com/en/reservation/4fbPDV?currency=idr", "_blank");
-                }}
+                onClick={() => openCloudbedsBooking("gilit")}
                 className="bg-[#EE5B2B] text-white hover:bg-white hover:text-[#004A61] rounded-none h-12 px-10 font-bold uppercase tracking-[3px] text-xs transition-all duration-300 shadow-xl mb-12">
                 BOOK NOW
               </Button>
@@ -293,9 +291,7 @@ export function GiliTClient() {
                     <p className="font-bold text-[#EE5B2B] text-lg mb-6">{room.price}</p>
                     <p className="text-sm opacity-70 font-medium mb-10">{room.details}</p>
                     <div className="flex flex-col sm:flex-row gap-4 mt-auto">
-                      <Button onClick={() => { 
-                        window.open("https://hotels.cloudbeds.com/en/reservation/4fbPDV?currency=idr", "_blank"); 
-                      }} className="bg-[#EE5B2B] text-white hover:bg-[#004A61] rounded-none h-12 px-8 font-bold uppercase text-xs tracking-widest transition-colors w-full sm:w-auto">
+                      <Button onClick={() => openCloudbedsBooking("gilit")} className="bg-[#EE5B2B] text-white hover:bg-[#004A61] rounded-none h-12 px-8 font-bold uppercase text-xs tracking-widest transition-colors w-full sm:w-auto">
                         BOOK NOW
                       </Button>
                     </div>
@@ -374,10 +370,7 @@ export function GiliTClient() {
               READY FOR THE <span className="text-[#EE5B2B]">ISLAND?</span>
             </h2>
             <Button 
-              onClick={() => {
-                localStorage.setItem("booking_origin", "gilit");
-                window.open("https://hotels.cloudbeds.com/en/reservation/4fbPDV?currency=idr", "_blank");
-              }}
+              onClick={() => openCloudbedsBooking("gilit")}
               className="bg-[#EE5B2B] text-white hover:bg-white hover:text-[#004A61] rounded-none h-12 px-12 font-bold uppercase tracking-[3px] text-[10px] transition-all duration-500 shadow-xl">
               BOOK NOW
             </Button>

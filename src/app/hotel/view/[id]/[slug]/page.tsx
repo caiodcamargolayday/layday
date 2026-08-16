@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import { MapPin, CheckCircle2, Star, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { HotelBookingButton } from "@/components/hotel/HotelBookingButton";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -279,9 +280,9 @@ export default async function HotelPage({ params }: { params: Promise<{ id: stri
                 </div>
               </div>
 
-              <Button className="w-full bg-[#EE5B2B] text-white hover:bg-[#d64e22] font-bold uppercase tracking-widest py-6 rounded-none text-lg">
+              <HotelBookingButton hotelId={resolvedParams.id} className="w-full bg-[#EE5B2B] text-white hover:bg-[#d64e22] font-bold uppercase tracking-widest py-6 rounded-none text-lg">
                 Check Availability
-              </Button>
+              </HotelBookingButton>
               <p className="text-xs text-center font-bold uppercase tracking-widest opacity-60 mt-4 text-[#083248]">
                 Best price guarantee direct
               </p>
@@ -297,9 +298,9 @@ export default async function HotelPage({ params }: { params: Promise<{ id: stri
           <p className="text-xs font-bold uppercase tracking-widest opacity-60 text-[#083248]">Starting from</p>
           <p className="font-bold text-lg text-[#EE5B2B]">${data.price} <span className="text-sm text-[#083248]">/ night</span></p>
         </div>
-        <Button className="bg-[#EE5B2B] text-white hover:bg-[#d64e22] font-bold uppercase tracking-widest rounded-none">
+        <HotelBookingButton hotelId={resolvedParams.id} className="bg-[#EE5B2B] text-white hover:bg-[#d64e22] font-bold uppercase tracking-widest rounded-none">
           Book Now
-        </Button>
+        </HotelBookingButton>
       </div>
 
     </div>

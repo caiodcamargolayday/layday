@@ -1,0 +1,224 @@
+{
+  "exportFormatVersion": 2,
+  "exportTime": "2026-08-16T22:57:29.279Z",
+  "containerVersion": {
+    "path": "accounts/1000/containers/2000/versions/0",
+    "accountId": "1000",
+    "containerId": "2000",
+    "containerVersionId": "0",
+    "container": {
+      "path": "accounts/1000/containers/2000",
+      "accountId": "1000",
+      "containerId": "2000",
+      "name": "Lay Day Canggu (Cloudbeds + Website)",
+      "publicId": "GTM-MGM8GCS4",
+      "usageContext": [
+        "WEB"
+      ]
+    },
+    "tag": [
+      {
+        "accountId": "1000",
+        "containerId": "2000",
+        "tagId": "1",
+        "name": "Conversion Linker - Cross Domain",
+        "type": "gclidw",
+        "parameter": [
+          {
+            "type": "BOOLEAN",
+            "key": "enableCrossDomainLinking",
+            "value": "true"
+          },
+          {
+            "type": "LIST",
+            "key": "domains",
+            "list": [
+              {
+                "type": "TEMPLATE",
+                "value": "laydayhostel.com"
+              },
+              {
+                "type": "TEMPLATE",
+                "value": "hotels.cloudbeds.com"
+              },
+              {
+                "type": "TEMPLATE",
+                "value": "cloudbeds.com"
+              }
+            ]
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "enableUrlParamLinking",
+            "value": "true"
+          }
+        ],
+        "firingTriggerId": [
+          "2147479553"
+        ]
+      },
+      {
+        "accountId": "1000",
+        "containerId": "2000",
+        "tagId": "2",
+        "name": "Google Ads - Booking Purchase Conversion",
+        "type": "awct",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "conversionId",
+            "value": "18281940342"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "conversionLabel",
+            "value": "YOUR_CANGGU_CONVERSION_LABEL"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "conversionValue",
+            "value": "{{dlv - ecommerce.value}}"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "orderId",
+            "value": "{{dlv - ecommerce.transaction_id}}"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "currencyCode",
+            "value": "{{dlv - ecommerce.currency}}"
+          }
+        ],
+        "firingTriggerId": [
+          "100"
+        ]
+      }
+    ],
+    "trigger": [
+      {
+        "accountId": "1000",
+        "containerId": "2000",
+        "triggerId": "100",
+        "name": "Event - Purchase or Booking Confirmed",
+        "type": "CUSTOM_EVENT",
+        "customEventFilter": [
+          {
+            "type": "MATCH_REGEX",
+            "parameter": [
+              {
+                "type": "TEMPLATE",
+                "key": "arg0",
+                "value": "{{_event}}"
+              },
+              {
+                "type": "TEMPLATE",
+                "key": "arg1",
+                "value": "^(purchase|booking_confirmed|reservation_confirmed|booking_complete)$"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "variable": [
+      {
+        "accountId": "1000",
+        "containerId": "2000",
+        "variableId": "10",
+        "name": "dlv - ecommerce.value",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "ecommerce.value"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "true"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "defaultValue",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "accountId": "1000",
+        "containerId": "2000",
+        "variableId": "11",
+        "name": "dlv - ecommerce.transaction_id",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "ecommerce.transaction_id"
+          }
+        ]
+      },
+      {
+        "accountId": "1000",
+        "containerId": "2000",
+        "variableId": "12",
+        "name": "dlv - ecommerce.currency",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "ecommerce.currency"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "true"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "defaultValue",
+            "value": "IDR"
+          }
+        ]
+      }
+    ],
+    "builtInVariable": [
+      {
+        "accountId": "1000",
+        "containerId": "2000",
+        "type": "EVENT",
+        "name": "Event"
+      },
+      {
+        "accountId": "1000",
+        "containerId": "2000",
+        "type": "PAGE_URL",
+        "name": "Page URL"
+      },
+      {
+        "accountId": "1000",
+        "containerId": "2000",
+        "type": "PAGE_HOSTNAME",
+        "name": "Page Hostname"
+      }
+    ]
+  }
+}

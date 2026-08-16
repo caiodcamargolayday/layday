@@ -9,6 +9,7 @@ import {
   Flame, Snowflake, Coffee, Laptop, GlassWater, Sparkles, Refrigerator, Car
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { openCloudbedsBooking } from "@/lib/tracking";
 
 const ASSETS = {
   hero: "/coday_uluwatu/uluwatu_surfers_hero.png",
@@ -85,25 +86,7 @@ export function CodayUluwatuClient() {
   const [currentFacilityImg, setCurrentFacilityImg] = useState(0);
 
   const handleBooking = () => {
-    if (typeof window !== "undefined") {
-      if ((window as any).fbq) {
-        (window as any).fbq('track', 'InitiateCheckout');
-      }
-      localStorage.setItem("booking_origin", "coday");
-      
-      const baseUrl = "https://hotels.cloudbeds.com/en/reservation/WEE9oP?currency=idr";
-      const url = new URL(baseUrl);
-      const incoming = new URLSearchParams(window.location.search);
-      const keep = ['gclid', 'gbraid', 'wbraid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'fbclid'];
-      
-      keep.forEach(k => {
-        if (incoming.has(k)) {
-          url.searchParams.set(k, incoming.get(k)!);
-        }
-      });
-      
-      window.open(url.toString(), "_blank");
-    }
+    openCloudbedsBooking("coday");
   };
 
   const storyImages = [

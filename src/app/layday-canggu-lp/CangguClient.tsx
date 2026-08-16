@@ -9,6 +9,7 @@ import {
   Lightbulb, PartyPopper, Bath, ChevronLeft, ChevronRight, X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { openCloudbedsBooking } from "@/lib/tracking";
 
 const ASSETS = {
   hero: "/lay_day_canggu/beach 2.jpeg",
@@ -132,25 +133,7 @@ export function CangguClient() {
   const [currentFacilityImg, setCurrentFacilityImg] = useState(0);
   
   const handleBooking = () => {
-    if (typeof window !== "undefined") {
-      if ((window as any).fbq) {
-        (window as any).fbq('track', 'InitiateCheckout');
-      }
-      localStorage.setItem("booking_origin", "canggu");
-      
-      const baseUrl = "https://hotels.cloudbeds.com/en/reservation/idPO4I?currency=idr";
-      const url = new URL(baseUrl);
-      const incoming = new URLSearchParams(window.location.search);
-      const keep = ['gclid', 'gbraid', 'wbraid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'fbclid'];
-      
-      keep.forEach(k => {
-        if (incoming.has(k)) {
-          url.searchParams.set(k, incoming.get(k)!);
-        }
-      });
-      
-      window.open(url.toString(), "_blank");
-    }
+    openCloudbedsBooking("canggu");
   };
 
   const storyImages = [
