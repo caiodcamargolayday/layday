@@ -33,7 +33,7 @@ export function MetaPixel() {
   useEffect(() => {
     if (!pathname) return;
 
-    let origin: string | null = null;
+    const origin: string | null = null;
     // We now rely on the pathname containing the venue name (e.g. /booking-confirmation/canggu)
 
     const pixelId = getPixelIdForPath(pathname, origin);
