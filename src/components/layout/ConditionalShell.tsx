@@ -5,7 +5,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 
 
-const STANDALONE_ROUTES = ["/creator-week-gili-t", "/11-years-layday"];
+const STANDALONE_ROUTES = ["/creator-week-gili-t", "/11-years-layday", "/2-years-layday-uluwatu"];
 
 export function ConditionalShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();

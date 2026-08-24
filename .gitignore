@@ -19,6 +19,7 @@
 # misc
 .DS_Store
 *.pem
+public/anniversary_layday_uluwatu/*.pdf
 
 # debug
 npm-debug.log*
