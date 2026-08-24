@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 // POST /api/anniversary-uluwatu-apply
-// Forwards Uluwatu anniversary RSVP form answers to Google Apps Script → Google Sheets
+// Forwards form answers to Google Apps Script → Google Sheets
 export async function POST(req: NextRequest) {
   const APPS_SCRIPT_URL =
     process.env.ANNIVERSARY_ULUWATU_SHEETS_URL ||
@@ -18,11 +18,12 @@ export async function POST(req: NextRequest) {
     }
 
     const payload = {
-      ...body,
+      timestamp: body.timestamp || new Date().toISOString(),
+      name: body.name || "",
+      email: body.email || "",
       phone: phoneStr,
-      venue: "Lay Day Uluwatu",
-      location: body.location || "Lay Day Uluwatu (2nd Anniversary)",
-      eventDate: "04.09.26",
+      location: body.location || "Lay Day Uluwatu",
+      spin_result: body.spin_result || "Free Shot On Entry",
     };
 
     if (APPS_SCRIPT_URL) {

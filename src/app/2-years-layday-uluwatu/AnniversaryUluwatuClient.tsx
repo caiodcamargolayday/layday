@@ -304,12 +304,8 @@ function ConversationalFormModal({
           name,
           email,
           phone,
-          location: "Lay Day Uluwatu (2nd Anniversary)",
-          venue: "Lay Day Uluwatu",
-          group_size: "1",
+          location: "Lay Day Uluwatu",
           spin_result: reward,
-          eventDate: "04.09.26",
-          sourceUrl: typeof window !== "undefined" ? window.location.href : "",
         }),
       });
     } catch (err) {
