@@ -432,8 +432,8 @@ function ConversationalFormModal({
               </div>
             </div>
 
-            <p className="text-xs text-white/60 font-medium leading-relaxed -mt-1">
-              Give your name (<span className="text-white font-bold">{answers[0]}</span>) at the door to receive your anniversary wristband and free shot voucher.
+            <p className="text-xs text-white/70 font-medium leading-relaxed -mt-1">
+              Simply give your name (<span className="text-white font-bold">{answers[0]}</span>) at the door to get in and claim your free welcome shot at the bar!
             </p>
 
             {/* Modal Actions */}
