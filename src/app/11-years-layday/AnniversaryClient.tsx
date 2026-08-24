@@ -16,7 +16,7 @@ import {
   Camera,
   ExternalLink,
 } from "lucide-react";
-import { FaInstagram, FaWhatsapp } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { openCloudbedsBooking } from "@/lib/tracking";
@@ -172,16 +172,6 @@ const SCHEDULE = [
   },
 ];
 
-// ─── WA Link Helper ───────────────────────────────────────────────────────────
-const WA_NUMBER = "6281138111183";
-function buildWhatsAppLink(name: string, location: string, group: string, spin: string) {
-  const spinInfo = spin ? ` My Wheel of Regret spin result was "${spin}".` : "";
-  const msg = encodeURIComponent(
-    `Hey Lay Day Crew! 🎉 My name is ${name || "a Lay Day Legend"}. I just registered on the 11th Anniversary Guestlist (/11-years-layday)! We are a group of ${group || "1"} coming to ${location || "Lay Day"}.${spinInfo} Let's send it!`
-  );
-  return `https://wa.me/${WA_NUMBER}?text=${msg}`;
-}
-
 // ─── Conversational Form Questions (4 Steps) ──────────────────────────────────
 type FormQuestion =
   | { type: "text"; q: string; placeholder: string; sub?: string }
@@ -204,9 +194,9 @@ const FORM_QUESTIONS: FormQuestion[] = [
   },
   {
     type: "tel",
-    q: "What is your WhatsApp number?",
+    q: "What is your WhatsApp / Phone number?",
     placeholder: "+62 812 3456 7890",
-    sub: "Include your country code for fast WhatsApp guestlist check-in.",
+    sub: "Include your country code for fast guestlist door check-in.",
   },
   {
     type: "radio",
@@ -259,7 +249,7 @@ function ConversationalFormModal({
           phone,
           location,
           group_size: "1",
-          spin_result: spinReward || "None",
+          spin_result: spinReward || "Free Shot On Entry",
         }),
       });
     } catch (err) {
@@ -297,7 +287,7 @@ function ConversationalFormModal({
           event: "anniversary_rsvp",
           name,
           location,
-          spin_result: spinReward,
+          spin_result: spinReward || "Free Shot On Entry",
         });
       }
     }
@@ -365,55 +355,111 @@ function ConversationalFormModal({
       </div>
 
       <AnimatePresence mode="wait">
-        {/* ── SUCCESS SCREEN ── */}
+        {/* ── SUCCESS SCREEN / THANK YOU POPUP ── */}
         {done ? (
           <motion.div
             key="done"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="flex-1 flex flex-col items-center justify-center text-center px-6 py-12 max-w-lg mx-auto gap-6"
+            className="flex-1 flex flex-col items-center justify-center text-center px-4 sm:px-6 py-8 max-w-lg mx-auto gap-5 w-full my-auto"
           >
-            <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-[#FF5E36] to-[#E6007E] flex items-center justify-center shadow-[0_0_40px_rgba(230,0,126,0.7)]">
-              <Check className="w-10 h-10 text-white" />
+            {/* Animated Celebration Badge */}
+            <div className="relative">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-[#FF5E36] via-[#E6007E] to-[#FFE500] flex items-center justify-center shadow-[0_0_50px_rgba(230,0,126,0.8)]">
+                <Check className="w-10 h-10 text-white stroke-[3]" />
+              </div>
+              <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-[#FFE500] text-black flex items-center justify-center text-sm font-bold shadow-lg">
+                🍸
+              </div>
             </div>
 
-            <div className="space-y-2">
-              <h2 className="font-heading text-4xl md:text-5xl tracking-wider uppercase text-white leading-tight">
+            <div className="space-y-1.5">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFE500]/15 border border-[#FFE500]/40 text-[#FFE500] text-[11px] font-extrabold uppercase tracking-[2px]">
+                ★ GUESTLIST SPOT CONFIRMED
+              </div>
+              <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl tracking-wider uppercase text-white leading-tight">
                 YOU&apos;RE ON THE LIST!
               </h2>
-              <p className="text-sm md:text-base text-white/80 font-medium">
-                Thank you, <span className="text-[#FFE500] font-bold">{answers[0]}</span>. Your guestlist spot for <span className="text-[#FF5E36] font-bold">{answers[3] || "Lay Day"}</span> is officially locked in!
+              <p className="text-sm text-white/80 font-medium">
+                Thank you, <span className="text-[#FFE500] font-bold">{answers[0]}</span>. Your spot for <span className="text-[#FF5E36] font-bold">{answers[3] || "Lay Day"}</span> is officially locked in!
               </p>
             </div>
 
-            {/* Spin Reward Reminder Box */}
-            {spinReward && (
-              <div className="p-4 rounded-xl bg-[#FFE500]/10 border-2 border-[#FFE500] text-left space-y-2 w-full">
-                <div className="flex items-center gap-2 text-[#FFE500] font-extrabold text-xs tracking-wider uppercase">
-                  <Camera className="w-4 h-4" /> Screenshot Reminder
-                </div>
-                <p className="text-xs text-white/90 leading-relaxed font-medium">
-                  Your Spin Result was: <span className="text-[#FFE500] font-bold text-sm underline">{spinReward}</span>. Make sure to take a screenshot of your wheel spin result and show it at the front door!
-                </p>
+            {/* Official Guestlist Pass Ticket Card */}
+            <div className="w-full bg-gradient-to-b from-white/10 to-white/5 border-2 border-[#FFE500]/80 rounded-2xl p-5 text-left relative overflow-hidden shadow-[0_0_30px_rgba(255,229,0,0.2)]">
+              <div className="absolute top-0 right-0 bg-[#FFE500] text-black font-black text-[10px] uppercase tracking-widest px-3 py-1 rounded-bl-xl">
+                OFFICIAL GUESTLIST PASS
               </div>
-            )}
 
-            {/* WhatsApp Confirmation Action */}
-            <a
-              href={buildWhatsAppLink(answers[0] || "", answers[3] || "", "1", spinReward || "")}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-3 w-full bg-[#25D366] hover:bg-[#1ebe5d] text-white font-extrabold uppercase tracking-[3px] text-xs h-14 rounded-none shadow-xl transition-all"
-            >
-              <FaWhatsapp className="w-5 h-5" /> CONFIRM ON WHATSAPP
-            </a>
+              <div className="space-y-3 pt-1">
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-[2px] text-white/50 block">GUEST NAME</span>
+                  <span className="text-lg font-heading tracking-wide uppercase text-white font-bold">{answers[0] || "Lay Day Legend"}</span>
+                </div>
 
-            <button
-              onClick={onClose}
-              className="text-xs text-white/50 hover:text-white uppercase tracking-widest font-bold transition-colors"
-            >
-              Return to Website
-            </button>
+                <div className="grid grid-cols-2 gap-2 pt-1 border-t border-white/10">
+                  <div>
+                    <span className="text-[10px] font-bold uppercase tracking-[2px] text-white/50 block">DESTINATION</span>
+                    <span className="text-xs font-bold uppercase text-[#FF5E36]">{answers[3] || "Lay Day Canggu"}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-bold uppercase tracking-[2px] text-white/50 block">EVENT DATE</span>
+                    <span className="text-xs font-bold uppercase text-white">04 . 09 . 2026</span>
+                  </div>
+                </div>
+
+                {/* Free Shot Perk Card */}
+                <div className="p-3 rounded-xl bg-gradient-to-r from-[#FF5E36]/20 via-[#E6007E]/20 to-[#FFE500]/20 border border-[#FFE500]/50 flex items-center gap-3">
+                  <div className="text-2xl">🍸</div>
+                  <div>
+                    <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#FFE500] block">
+                      PERK INCLUDED: 1x FREE WELCOME SHOT
+                    </span>
+                    <span className="text-[11px] text-white/80 font-medium">
+                      Claim your celebratory house shot at the bar upon entry!
+                    </span>
+                  </div>
+                </div>
+
+                {/* Spin Reward Reminder Box */}
+                {spinReward && (
+                  <div className="p-2.5 rounded-lg bg-[#FFE500]/10 border border-[#FFE500]/40 flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-xs text-white">
+                      <Camera className="w-3.5 h-3.5 text-[#FFE500]" />
+                      <span>Wheel Reward: <strong className="text-[#FFE500]">{spinReward}</strong></span>
+                    </div>
+                    <span className="text-[9px] uppercase font-bold text-white/60 tracking-wider">Show Screenshot At Bar</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <p className="text-xs text-white/60 font-medium leading-relaxed -mt-1">
+              Give your name (<span className="text-white font-bold">{answers[0]}</span>) at the door to receive your anniversary wristband and free shot voucher.
+            </p>
+
+            {/* Modal Actions */}
+            <div className="w-full flex flex-col gap-2 pt-1">
+              <Button
+                onClick={() => {
+                  onClose();
+                  const scheduleEl = document.getElementById("schedule");
+                  if (scheduleEl) {
+                    scheduleEl.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
+                className="w-full bg-gradient-to-r from-[#FF5E36] to-[#E6007E] hover:from-[#FF4116] hover:to-[#C4006B] text-white font-extrabold uppercase tracking-[3px] text-xs h-13 rounded-none shadow-[0_0_25px_rgba(230,0,126,0.5)] transition-all"
+              >
+                VIEW EVENT SCHEDULE & LINEUP <ArrowRight className="w-4 h-4 ml-1" />
+              </Button>
+
+              <button
+                onClick={onClose}
+                className="text-xs text-white/50 hover:text-white uppercase tracking-widest font-bold py-2 transition-colors"
+              >
+                Return to Website
+              </button>
+            </div>
           </motion.div>
         ) : (
           /* ── QUESTION STEPS ── */
@@ -566,7 +612,7 @@ export function AnniversaryClient() {
           <Sparkles className="w-3.5 h-3.5" /> 11 YEARS OF LAY DAY • 04.09.26 • SAVE THE DATE
         </span>
         <span className="opacity-75">|</span>
-        <span>BAD CHOICES MAKE GOOD STORIES</span>
+        <span className="text-[#FFE500] font-black drop-shadow-sm">🍸 JOIN GUESTLIST & GET A FREE SHOT</span>
       </div>
 
       {/* ── 1. HERO SECTION ── */}
@@ -634,19 +680,25 @@ export function AnniversaryClient() {
             <span className="text-[#FFE500] font-bold">04.09.26</span>, we celebrate every wild night, every lifelong friend, and every questionable decision that made us legends.
           </motion.p>
 
-          {/* Action CTAs */}
+          {/* Big High-Impact Free Shot CTA */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.45 }}
-            className="mt-10 flex flex-col items-center gap-4 w-full sm:w-auto"
+            className="mt-8 md:mt-10 flex flex-col items-center gap-3.5 w-full sm:w-auto"
           >
             <Button
               onClick={() => setFormOpen(true)}
-              className="w-full sm:w-auto bg-[#E6007E] hover:bg-white text-white hover:text-black font-extrabold uppercase tracking-[4px] text-xs sm:text-sm h-14 md:h-16 px-10 md:px-16 rounded-none transition-all duration-300 shadow-[0_0_35px_rgba(230,0,126,0.6)] hover:scale-105"
+              className="w-full sm:w-auto bg-gradient-to-r from-[#FF5E36] via-[#E6007E] to-[#FF2A6D] hover:from-[#FF4116] hover:to-[#C4006B] text-white font-extrabold uppercase tracking-[3px] md:tracking-[4px] text-xs sm:text-sm md:text-base h-16 md:h-20 px-8 sm:px-12 md:px-16 rounded-none transition-all duration-300 shadow-[0_0_45px_rgba(230,0,126,0.7)] hover:scale-105 active:scale-95 group"
             >
-              JOIN THE ANNIVERSARY GUESTLIST
+              <span className="flex items-center gap-2">
+                🍸 JOIN THE GUESTLIST & GET A FREE SHOT
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </span>
             </Button>
+            <span className="text-[11px] md:text-xs font-bold uppercase tracking-[2px] text-[#FFE500] drop-shadow-[0_0_10px_rgba(255,229,0,0.4)]">
+              ★ Instant Door Access • Free Welcome Shot on Arrival • 100% Free RSVP
+            </span>
           </motion.div>
 
           {/* Fast Stats Bar */}
@@ -925,7 +977,7 @@ export function AnniversaryClient() {
               }}
               className="flex-1 bg-[#E6007E] hover:bg-white text-white hover:text-black font-extrabold uppercase tracking-[3px] text-xs h-13 rounded-none transition-all shadow-[0_0_25px_rgba(230,0,126,0.7)]"
             >
-              CLAIM GUESTLIST SPOT
+              CLAIM GUESTLIST & FREE SHOT 🍸
             </Button>
             <button
               onClick={() => setWheelModalOpen(false)}
@@ -1265,7 +1317,7 @@ export function AnniversaryClient() {
 
         <div className="max-w-4xl mx-auto px-4 relative z-10 space-y-8">
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-[#FFE500] text-xs font-extrabold uppercase tracking-[3px]">
-            ⚡ 04.09.26 • SECURE YOUR SPOT
+            🍸 04.09.26 • SECURE YOUR GUESTLIST SPOT & FREE SHOT
           </span>
           <h2 className="text-5xl sm:text-7xl md:text-8xl font-heading tracking-widest uppercase leading-none text-white drop-shadow-[0_0_30px_rgba(255,94,54,0.4)]">
             DON&apos;T MISS <br />
@@ -1274,16 +1326,19 @@ export function AnniversaryClient() {
             </span>
           </h2>
           <p className="text-base sm:text-xl text-white/80 font-medium max-w-2xl mx-auto leading-relaxed">
-            Guestlist registration gets you priority entry, physical Wheel of Regret spin tokens, and exclusive anniversary drink perks.
+            Join the official anniversary guestlist now to lock your spot, claim your free welcome house shot upon arrival, and unlock physical Wheel of Regret spin tokens.
           </p>
 
-          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="pt-4 flex flex-col items-center justify-center gap-3">
             <Button
               onClick={() => setFormOpen(true)}
-              className="w-full sm:w-auto bg-gradient-to-r from-[#FF5E36] to-[#E6007E] hover:from-[#FF4116] hover:to-[#C4006B] text-white font-extrabold uppercase tracking-[4px] text-sm md:text-base h-16 md:h-20 px-10 md:px-16 rounded-none transition-all shadow-[0_0_45px_rgba(230,0,126,0.6)] hover:scale-105"
+              className="w-full sm:w-auto bg-gradient-to-r from-[#FF5E36] to-[#E6007E] hover:from-[#FF4116] hover:to-[#C4006B] text-white font-extrabold uppercase tracking-[3px] md:tracking-[4px] text-sm md:text-base h-16 md:h-20 px-10 md:px-16 rounded-none transition-all shadow-[0_0_45px_rgba(230,0,126,0.6)] hover:scale-105"
             >
-              <Sparkles className="w-5 h-5 mr-2" /> JOIN THE GUESTLIST NOW
+              <Sparkles className="w-5 h-5 mr-2" /> JOIN THE GUESTLIST & GET A FREE SHOT 🍸
             </Button>
+            <span className="text-[11px] md:text-xs font-bold uppercase tracking-[2px] text-white/60">
+              ★ Free Registration • Canggu, Uluwatu & Gili T
+            </span>
           </div>
         </div>
       </section>
