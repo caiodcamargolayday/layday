@@ -25,7 +25,6 @@ import { openCloudbedsBooking } from "@/lib/tracking";
 const ASSETS = {
   mainPoster: "/anniversary_layday/LD-Anniversary-IGF.jpg",
   tearOffFlyer: "/anniversary_layday/LD-Cotent Social Media-IGF.jpg",
-  teaserHanger: "/anniversary_layday/LDU-Anniversary Teaser-IGF.jpg",
   teaserVideoWithDate: "/anniversary_layday/LD-Anniversary Teaser Video with Date.mp4",
   cangguBar: "/lay_day_canggu/the_bar.jpg",
   logo: "/logo-layday.png",
@@ -204,9 +203,8 @@ const FORM_QUESTIONS: FormQuestion[] = [
     sub: "Select your destination for the 04.09.26 celebration.",
     opts: [
       "Lay Day Canggu (The OG)",
-      "Lay Day Uluwatu",
       "Lay Day Gili T",
-      "Bali Tour (Multiple Locations!)",
+      "Both Locations (Canggu & Gili T)",
     ],
   },
 ];
@@ -721,7 +719,7 @@ export function AnniversaryClient() {
               <span className="text-[11px] md:text-xs font-bold uppercase tracking-[2px] text-white/70">Bad Decisions</span>
             </div>
             <div className="p-4 rounded-lg bg-white/5 border border-white/5 backdrop-blur-sm">
-              <span className="font-heading text-4xl md:text-5xl text-[#05D9E8] block tracking-widest">3</span>
+              <span className="font-heading text-4xl md:text-5xl text-[#05D9E8] block tracking-widest">2</span>
               <span className="text-[11px] md:text-xs font-bold uppercase tracking-[2px] text-white/70">Epic Locations</span>
             </div>
           </motion.div>
@@ -1250,7 +1248,7 @@ export function AnniversaryClient() {
               </div>
               <div className="mt-8 pt-4 border-t border-white/10">
                 <span className="text-xs font-bold text-[#FFE500] uppercase tracking-wider block">
-                  ★ Available at Canggu, Uluwatu & Gili T Bars
+                  ★ Available at Canggu & Gili T Bars
                 </span>
               </div>
             </motion.div>
@@ -1337,7 +1335,7 @@ export function AnniversaryClient() {
               <Sparkles className="w-5 h-5 mr-2" /> JOIN THE GUESTLIST & GET A FREE SHOT 🍸
             </Button>
             <span className="text-[11px] md:text-xs font-bold uppercase tracking-[2px] text-white/60">
-              ★ Free Registration • Canggu, Uluwatu & Gili T
+              ★ Free Registration • Canggu & Gili T
             </span>
           </div>
         </div>
@@ -1368,14 +1366,6 @@ export function AnniversaryClient() {
               className="flex items-center gap-1.5 text-white/80 hover:text-[#FF5E36] transition-colors"
             >
               <FaInstagram className="w-4 h-4" /> @laydaycanggu
-            </a>
-            <a
-              href="https://www.instagram.com/laydayuluwatu/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-white/80 hover:text-[#E6007E] transition-colors"
-            >
-              <FaInstagram className="w-4 h-4" /> @laydayuluwatu
             </a>
             <a
               href="https://www.instagram.com/laydaygilit/"

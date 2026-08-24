@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "11 Years of Lay Day | Bad Choices Make Good Stories",
     description:
-      "Celebrate 11 years of Lay Day Hostel Bali across Canggu, Uluwatu & Gili T. Still sending since 2015.",
+      "Celebrate 11 years of Lay Day Hostel Bali across Canggu & Gili T. Still sending since 2015.",
     images: [
       {
         url: "/anniversary_layday/LD-Anniversary-IGF.jpg",
