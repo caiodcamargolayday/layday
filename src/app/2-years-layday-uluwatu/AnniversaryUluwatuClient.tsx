@@ -16,6 +16,12 @@ import {
   Camera,
   Volume2,
   VolumeX,
+  Flame,
+  Music,
+  PartyPopper,
+  Wine,
+  Gift,
+  Smile,
 } from "lucide-react";
 import { FaInstagram, FaWhatsapp } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
@@ -29,107 +35,103 @@ import {
 
 // ─── Visual Assets ─────────────────────────────────────────────────────────────
 const ASSETS = {
-  mainPoster: "/anniversary_layday_uluwatu/IMG_7040.JPEG",
+  mainPoster: "/anniversary_layday_uluwatu/LDU-Anniversary-A3.jpg",
   doorHanger: "/anniversary_layday/LDU-Anniversary Teaser-IGF.jpg",
   teaserVideo: "/anniversary_layday_uluwatu/LDU-Anniversary Teaser Video.mp4",
   logo: "/logo_layday_uluwatu.png",
   mainLogo: "/logo-layday.png",
 };
 
-// ─── Wheel of Regret Segments (Uluwatu Plum & Cherry Palette) ─────────────────
-interface WheelSegment {
+// ─── Official Guest Challenge Board Items (From Uluwatu Document) ──────────────
+interface ChallengeItem {
   id: number;
-  label: string;
-  sub: string;
-  color: string;
+  title: string;
+  category: string;
   icon: string;
   description: string;
+  reward: string;
 }
 
-const WHEEL_SEGMENTS: WheelSegment[] = [
-  {
-    id: 0,
-    label: "FREE SHOT",
-    sub: "House Special Shot",
-    color: "#7A2856",
-    icon: "🍸",
-    description: "Head to the Uluwatu pool bar and claim your celebratory free house shot!",
-  },
+const GUEST_CHALLENGES: ChallengeItem[] = [
   {
     id: 1,
-    label: "WATERFALL",
-    sub: "Party Chain",
-    color: "#C4276A",
-    icon: "🌊",
-    description: "Start a group waterfall with the 3 people closest to you by the pool!",
+    title: "Dive Into the Giant Foam Party",
+    category: "3 PM Pool Takeover",
+    icon: "🫧",
+    description: "Jump into the foam-flooded Uluwatu pool during the 3 PM - 6 PM foam cannon session.",
+    reward: "+1 Stamp • Pool MVP",
   },
   {
     id: 2,
-    label: "DANCE OFF",
-    sub: "Show Your Moves",
-    color: "#E5AB3A",
-    icon: "🕺",
-    description: "Pick someone by the deck for a 30-second bar dance-off!",
+    title: "Shot With an Uluwatu Bartender",
+    category: "Bar Station",
+    icon: "🥃",
+    description: "Clink glasses and take a celebratory anniversary shot with our legendary bar crew.",
+    reward: "+1 Stamp • Free Shot Token",
   },
   {
     id: 3,
-    label: "KISS NEIGHBOUR",
-    sub: "Pucker Up",
-    color: "#9C3B6E",
-    icon: "😘",
-    description: "Plant a cheeky kiss on the cheek of whoever is to your left!",
+    title: "Strike a Pose at the Photo Booth",
+    category: "Photo Op",
+    icon: "📸",
+    description: "Snap a souvenir strip at the branded photo booth or the 2-Year Anniversary Photo Wall.",
+    reward: "+1 Stamp • Souvenir Print",
   },
   {
     id: 4,
-    label: "BUY A DRINK",
-    sub: "Hostel Karma",
-    color: "#5E193E",
-    icon: "🍻",
-    description: "Buy a cold Bintang for a stranger or your favorite Uluwatu bartender!",
+    title: "Join the Safari World Record",
+    category: "8 PM Activation",
+    icon: "🦁",
+    description: "Take part in the official Safari challenge activation running throughout the night.",
+    reward: "+1 Stamp • World Record Legend",
   },
   {
     id: 5,
-    label: "KARAOKE SONG",
-    sub: "Belt It Out",
-    color: "#D97706",
-    icon: "🎤",
-    description: "Grab the mic and belt out the chorus of an absolute party anthem!",
+    title: "Order the Watermelon Campaign Drink",
+    category: "F&B Special",
+    icon: "🍉",
+    description: "Taste the brand new promotional watermelon cocktail and receive your prize raffle ticket.",
+    reward: "+1 Stamp • 1x Raffle Entry",
   },
   {
     id: 6,
-    label: "DOUBLE SHOT",
-    sub: "Double Trouble",
-    color: "#8D255F",
-    icon: "⚡",
-    description: "Double shot time: one for you, one for the legend next to you!",
+    title: "Light a Sparkler at 9:30 PM Countdown",
+    category: "Signature Moment",
+    icon: "✨",
+    description: "Join the 10-second MC countdown, giant cake cutting, and sparkler celebration with everyone.",
+    reward: "+1 Stamp • Anniversary Memory",
+  },
+];
+
+// ─── DJ Lineup Showcase (From Uluwatu Document) ────────────────────────────────
+const DJ_LINEUP = [
+  {
+    name: "CITRA",
+    time: "2:00 PM - 5:00 PM",
+    genre: "House Sessions with Lyrics",
+    description: "Uplifting vocal house grooves to kick off the sunny afternoon by the pool.",
+    badge: "Daytime Vibes",
+    color: "#9C3B6E",
   },
   {
-    id: 7,
-    label: "MYSTERY DARE",
-    sub: "Bartender Choice",
-    color: "#B45309",
-    icon: "🃏",
-    description: "Ask the Uluwatu head bartender for the 2nd Anniversary Mystery Challenge!",
+    name: "URI",
+    time: "5:00 PM - 8:00 PM",
+    genre: "Reggaeton & Latin Sunset",
+    description: "Golden hour Latin rhythms and high-energy bass that sets the pool deck ablaze.",
+    badge: "Sunset Session",
+    color: "#E5AB3A",
+  },
+  {
+    name: "JAKA",
+    time: "8:00 PM - 12:00 AM",
+    genre: "Commercial Anthems & Night Send",
+    description: "Non-stop commercial anthems and club bangers powering the party to midnight.",
+    badge: "Late Night Send",
+    color: "#C4276A",
   },
 ];
 
-// ─── Passport Challenge Items (Uluwatu 12 Dares) ──────────────────────────────
-const PASSPORT_CHALLENGES = [
-  { title: "Sink a Beer Pong Cup", icon: "🏓", points: "+1 Stamp" },
-  { title: "Shot with a Staff Member", icon: "🥃", points: "+1 Stamp" },
-  { title: "Kiss a Stranger", icon: "💋", points: "+1 Stamp" },
-  { title: "Jump in the Pool", icon: "🏊‍♂️", points: "+1 Stamp" },
-  { title: "Do a Shoey", icon: "👟", points: "+1 Stamp" },
-  { title: "Dance on the Bar", icon: "💃", points: "+1 Stamp" },
-  { title: "Complete a Body Shot", icon: "🔥", points: "+1 Stamp" },
-  { title: "Complete a Tsunami Shot", icon: "🌊", points: "+1 Stamp" },
-  { title: "Do a Shotgun", icon: "🍺", points: "+1 Stamp" },
-  { title: "Do a Snorkel", icon: "🤿", points: "+1 Stamp" },
-  { title: "Do a Funnel", icon: "🌪️", points: "+1 Stamp" },
-  { title: "Do a Lap Dance", icon: "🕺", points: "+1 Stamp" },
-];
-
-// ─── Confession Cards (Directly from Uluwatu Poster IMG_7040.JPEG) ─────────────
+// ─── Confession Cards (Directly from Uluwatu Flyer) ───────────────────────────
 const CONFESSION_ITEMS = [
   {
     id: 1,
@@ -181,65 +183,74 @@ const CONFESSION_ITEMS = [
   },
 ];
 
-// ─── Schedule Items (Uluwatu 2nd Anniversary Edition) ─────────────────────────
+// ─── Official Event Schedule (From LDU_2ND_YEAR_ANNIVERSARY_PARTY.pdf) ────────
 const SCHEDULE = [
   {
-    time: "12:00 PM",
-    title: "2ND ANNIVERSARY KICK-OFF",
-    subtitle: "Hourly Flash Happy Hours",
-    badge: "All Day Every Hour",
+    time: "2:00 PM",
+    title: "DOORS OPEN & ANNIVERSARY KICK-OFF",
+    subtitle: "Pop-Up Santai & Beer Bar • Photo Op Wall & Photo Booth Open",
+    badge: "2:00 PM • Doors Open",
     color: "#7A2856",
     description:
-      "Starting at 12:00 PM sharp and repeating every hour on the hour: for rapid flash windows, selected Bintangs, cocktails, and shots are heavily discounted! Fast, loud, and pure Uluwatu energy.",
+      "The celebration begins! Pop-up Santai & Beer Bar opens, the Lay Day 2-Year Photo Op Mirror / Wall is live, and the branded Photo Booth opens for complimentary souvenir prints.",
   },
   {
-    time: "ALL DAY",
-    title: "ULUWATU PASSPORT CHALLENGE",
-    subtitle: "12 Wild Hostel Dares & Grand Prize",
-    badge: "Interactive Mini-Game",
-    color: "#C4276A",
-    description:
-      "Grab your official 2nd Anniversary Passport card at check-in. Complete challenges (Beer Pong, Staff Shots, Shoeys, Pool Cannonballs, Tsunami Shots) to collect stamps, win free shots, and enter the Limited Edition Merch Grand Prize Draw.",
-  },
-  {
-    time: "ALL DAY",
-    title: "THE INFAMOUS WHEEL OF REGRET",
-    subtitle: "Spins, Dares & Mystery Free Shots",
-    badge: "Pool Bar Station",
-    color: "#E5AB3A",
-    description:
-      "Step up to the giant physical Wheel of Regret at the Uluwatu pool deck. Spin for random shots, group waterfalls, dance-offs, double shots, and mystery dares throughout the celebration.",
-  },
-  {
-    time: "4:00 PM",
-    title: "LAY DAY ULUWATU LEGENDS AWARDS",
-    subtitle: "Honoring 2 Years of Wild Memories",
-    badge: "Ceremony",
+    time: "2:00 PM - 5:00 PM",
+    title: "DJ CITRA — HOUSE SESSIONS",
+    subtitle: "Vocal House & Uplifting Poolside Grooves",
+    badge: "2:00 PM - 5:00 PM • Live DJ",
     color: "#9C3B6E",
     description:
-      "Celebrating the alumni, legends, volunteers, and guests who made Lay Day Uluwatu electric since day one. Categories: Biggest Send, Most Extended Stay, Pool MVP, and Lifetime Party Achievement (with ceremonial Tsunami Shots!).",
+      "DJ CITRA starts off the day by the pool deck with energetic house music and sing-along lyrics to get everyone locked into the celebration vibes.",
   },
   {
-    time: "6:00 PM",
-    title: "TRADITIONAL NASI TUMPENG SUNSET FEAST",
-    subtitle: "Indonesian Sacred Celebration",
-    badge: "Complimentary Food",
+    time: "3:00 PM - 6:00 PM",
+    title: "THE GIANT FOAM POOL PARTY",
+    subtitle: "Massive Pool Foam Cannons & Water Takeover",
+    badge: "3:00 PM - 6:00 PM • Highlight Event",
+    color: "#C4276A",
+    description:
+      "High-powered foam cannons take over the entire Uluwatu pool! Dive into mountains of bubbles, grab ice-cold drinks, and experience the wildest pool session in the Bukit.",
+  },
+  {
+    time: "5:00 PM - 8:00 PM",
+    title: "DJ URI — SUNSET REGGAETON",
+    subtitle: "Golden Hour Latin Heat & Heavy Bass",
+    badge: "5:00 PM - 8:00 PM • Sunset Session",
+    color: "#E5AB3A",
+    description:
+      "As the sun sets over the Bukit cliffs, DJ URI takes over with an explosive Reggaeton and Latin set that keeps the pool deck rocking.",
+  },
+  {
+    time: "8:00 PM",
+    title: "FREE CANAPÉS & SAFARI WORLD RECORD",
+    subtitle: "Complimentary Gourmet Bites & Venue Record Activation",
+    badge: "8:00 PM • Food & Activation",
     color: "#D97706",
     description:
-      "A sacred celebratory moment where management, local Balinese staff, volunteers, alumni, and guests unite for the traditional ceremonial Nasi Tumpeng yellow rice cutting and complimentary sunset feast.",
+      "Fresh complimentary gourmet canapés served to all guests! Plus the official Safari World Record challenge activation runs live throughout the venue.",
   },
   {
-    time: "7:00 PM - LATE",
-    title: "LIVE SUNSET DJS & ULUWATU ANNIVERSARY SEND",
-    subtitle: "Sunset Beats -> Pool Party -> Late Night",
-    badge: "Live Music & DJs",
+    time: "8:00 PM - 12:00 AM",
+    title: "DJ JAKA — COMMERCIAL NIGHT SEND",
+    subtitle: "Non-Stop Party Bangers & Anthem Energy",
+    badge: "8:00 PM - Late • Headliner DJ",
     color: "#7A2856",
     description:
-      "Resident and guest DJs turning up the volume into the night. Expect heavy bass, disco cherry vibes, and unforgettable Bukit memories!",
+      "DJ JAKA delivers the ultimate high-energy late-night experience with non-stop party anthems, commercial bangers, and electric dancefloor energy.",
+  },
+  {
+    time: "9:30 PM",
+    title: "OFFICIAL ANNIVERSARY MOMENT & CAKE CUTTING",
+    subtitle: "MC 10s Countdown, Sparklers & Magnum Champagne Pop",
+    badge: "9:30 PM • Main Climax",
+    color: "#C4276A",
+    description:
+      "The music pauses for the biggest moment of the year! The MC leads the venue in a huge 10-second countdown (10... 9... 8... 3... 2... 1!), cutting the giant anniversary cake with handheld sparklers distributed to all guests and magnum celebration bottles!",
   },
 ];
 
-// ─── Conversational Form Questions (3 Direct Steps) ───────────────────────────
+// ─── Conversational Form Questions (4 Direct Steps) ───────────────────────────
 type FormQuestion = {
   type: "text" | "email" | "tel";
   q: string;
@@ -266,15 +277,21 @@ const FORM_QUESTIONS: FormQuestion[] = [
     placeholder: "+62 812 3456 7890",
     sub: "Include your country code for fast check-in at the door.",
   },
+  {
+    type: "text",
+    q: "What is your nationality?",
+    placeholder: "e.g. Australia, Germany, Brazil...",
+    sub: "Tell us where in the world you're joining us from.",
+  },
 ];
 
 // ─── Fullscreen Conversational Form Modal ─────────────────────────────────────
 function ConversationalFormModal({
   onClose,
-  spinReward,
+  customPerk,
 }: {
   onClose: () => void;
-  spinReward: string | null;
+  customPerk?: string | null;
 }) {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
@@ -292,7 +309,8 @@ function ConversationalFormModal({
     const name = finalAnswers[0] || "";
     const email = finalAnswers[1] || "";
     const phone = finalAnswers[2] || "";
-    const reward = spinReward || "Free Shot On Entry";
+    const nationality = finalAnswers[3] || "";
+    const perk = customPerk || "Free Welcome House Shot On Entry";
 
     // 1. Submit to Google Sheets via Next.js API route
     try {
@@ -305,16 +323,17 @@ function ConversationalFormModal({
           email,
           phone,
           location: "Lay Day Uluwatu",
-          spin_result: reward,
+          nationality,
+          spin_result: perk,
         }),
       });
     } catch (err) {
       console.error("Sheet API error:", err);
     }
 
-    // 2. Submit to Meta CAPI
+    // 2. Submit to Meta CAPI (Lead Event)
     try {
-      await fetch("/api/meta-capi/contact", {
+      await fetch("/api/meta-capi/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -324,6 +343,7 @@ function ConversationalFormModal({
           phone,
           firstName: name.split(" ")[0] || name,
           lastName: name.split(" ").slice(1).join(" ") || undefined,
+          contentName: "2 Years Lay Day Uluwatu Anniversary - Lead",
         }),
       });
     } catch (err) {
@@ -343,7 +363,7 @@ function ConversationalFormModal({
           event: "uluwatu_anniversary_rsvp",
           name,
           venue: "Lay Day Uluwatu",
-          spin_result: reward,
+          spin_result: perk,
         });
       }
     }
@@ -462,27 +482,27 @@ function ConversationalFormModal({
                   </div>
                   <div>
                     <span className="text-[10px] font-bold uppercase tracking-[2px] text-[#7A2856]/60 block">
-                      DATE
+                      EVENT DATE
                     </span>
                     <span className="text-xs font-bold uppercase text-[#7A2856]">
-                      04 . 09 . 26
+                      04 . 09 . 26 • 2:00 PM
                     </span>
                   </div>
                 </div>
 
                 <div className="pt-1 border-t border-[#7A2856]/15">
                   <span className="text-[10px] font-bold uppercase tracking-[2px] text-[#7A2856]/60 block">
-                    UNLOCKED PERK / REWARD
+                    INCLUDED PERKS
                   </span>
                   <span className="text-xs font-black uppercase text-[#C4276A] tracking-wider flex items-center gap-1.5 mt-0.5">
-                    🍸 {spinReward || "Free Welcome House Shot On Entry"}
+                    🍸 1x Free Welcome House Shot On Entry + Foam Party Access
                   </span>
                 </div>
               </div>
 
               <div className="mt-4 pt-3 border-t border-dashed border-[#7A2856]/20 flex items-center justify-between text-[10px] text-[#7A2856]/70 font-mono">
                 <span>#LDU-ANNIV-2026</span>
-                <span className="text-[#7A2856] font-bold">★ SHOW AT DOOR</span>
+                <span className="text-[#7A2856] font-bold">★ SHOW AT DOOR FOR ENTRY</span>
               </div>
             </div>
 
@@ -490,7 +510,7 @@ function ConversationalFormModal({
             <div className="flex flex-col sm:flex-row gap-3 w-full pt-1">
               <a
                 href={`https://wa.me/?text=${encodeURIComponent(
-                  `I just got on the guestlist for Lay Day Uluwatu's 2nd Anniversary on 04.09.26! Claim your spot and free welcome shot here: ${
+                  `I just got on the VIP guestlist for Lay Day Uluwatu's 2nd Anniversary on 04.09.26! Claim your free spot and welcome house shot here: ${
                     typeof window !== "undefined" ? window.location.href : ""
                   }`
                 )}`}
@@ -523,11 +543,9 @@ function ConversationalFormModal({
                 <span className="text-xs font-mono font-bold text-[#7A2856] bg-[#7A2856]/10 border border-[#7A2856]/30 px-2.5 py-1 rounded-full uppercase tracking-wider">
                   Step {step + 1} of {total}
                 </span>
-                {spinReward && (
-                  <span className="text-[11px] font-bold text-[#C4276A] uppercase tracking-wider bg-[#C4276A]/10 border border-[#C4276A]/20 px-2.5 py-1 rounded-full">
-                    Prize: {spinReward}
-                  </span>
-                )}
+                <span className="text-[11px] font-bold text-[#C4276A] uppercase tracking-wider bg-[#C4276A]/10 border border-[#C4276A]/20 px-2.5 py-1 rounded-full">
+                  Perk: Free Welcome Shot 🍸
+                </span>
               </div>
 
               {/* Question */}
@@ -605,16 +623,13 @@ function ConversationalFormModal({
 // ─── Main Uluwatu Anniversary Client Component (Light Cream / White Theme) ────
 export function AnniversaryUluwatuClient() {
   const [formOpen, setFormOpen] = useState(false);
-  const [selectedReward, setSelectedReward] = useState<WheelSegment | null>(null);
 
   // Video State
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isVideoMuted, setIsVideoMuted] = useState(true);
 
-  // Wheel State
-  const [isSpinning, setIsSpinning] = useState(false);
-  const [wheelRotation, setWheelRotation] = useState(0);
-  const [wheelModalOpen, setWheelModalOpen] = useState(false);
+  // Interactive Guest Challenge Board State (Stamps collected)
+  const [completedChallenges, setCompletedChallenges] = useState<number[]>([1, 6]);
 
   // Confession voting state
   const [userVotes, setUserVotes] = useState<Record<number, "guilty" | "innocent">>({});
@@ -625,41 +640,10 @@ export function AnniversaryUluwatuClient() {
   const heroOpacity = useTransform(scrollYProgress, [0, 0.25], [1, 0.3]);
   const heroScale = useTransform(scrollYProgress, [0, 0.25], [1, 0.98]);
 
-  // True Uniform Aleatory Wheel Spin
-  const spinTheWheel = () => {
-    if (isSpinning) return;
-    setIsSpinning(true);
-    setSelectedReward(null);
-
-    const segmentCount = WHEEL_SEGMENTS.length;
-    const segmentAngle = 360 / segmentCount;
-
-    // 1. Truly random uniform selection from 0 to 7
-    let randomSegmentIndex: number;
-    if (typeof window !== "undefined" && window.crypto && window.crypto.getRandomValues) {
-      const array = new Uint32Array(1);
-      window.crypto.getRandomValues(array);
-      randomSegmentIndex = array[0] % segmentCount;
-    } else {
-      randomSegmentIndex = Math.floor(Math.random() * segmentCount);
-    }
-
-    // 2. Compute the exact angle so top pointer lands right on this slice's center
-    const centerAngle = randomSegmentIndex * segmentAngle + segmentAngle / 2;
-    const targetOffset = (360 - centerAngle) % 360;
-
-    // 3. Add 6 to 10 full random spins
-    const currentBase = Math.ceil(wheelRotation / 360) * 360;
-    const extraSpins = (6 + Math.floor(Math.random() * 5)) * 360;
-    const finalDegree = currentBase + extraSpins + targetOffset;
-
-    setWheelRotation(finalDegree);
-
-    setTimeout(() => {
-      setIsSpinning(false);
-      setSelectedReward(WHEEL_SEGMENTS[randomSegmentIndex]);
-      setWheelModalOpen(true);
-    }, 4000);
+  const toggleChallengeStamp = (id: number) => {
+    setCompletedChallenges((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
   };
 
   const toggleVideoMute = () => {
@@ -676,7 +660,7 @@ export function AnniversaryUluwatuClient() {
         {formOpen && (
           <ConversationalFormModal
             onClose={() => setFormOpen(false)}
-            spinReward={selectedReward?.label || null}
+            customPerk="Free Welcome House Shot On Entry"
           />
         )}
       </AnimatePresence>
@@ -701,7 +685,7 @@ export function AnniversaryUluwatuClient() {
           style={{ opacity: heroOpacity, scale: heroScale }}
           className="max-w-6xl mx-auto w-full flex flex-col items-center text-center relative z-10"
         >
-          {/* Centered Lay Day Uluwatu Logo (Natural Black on Cream Background) */}
+          {/* Centered Lay Day Uluwatu Logo */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -730,7 +714,7 @@ export function AnniversaryUluwatuClient() {
             </span>
           </motion.div>
 
-          {/* Main Headline (Plum Letters as in IMG_7040.JPEG) */}
+          {/* Main Headline */}
           <motion.div
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
@@ -755,7 +739,7 @@ export function AnniversaryUluwatuClient() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="mt-6 md:mt-8 max-w-2xl text-base sm:text-lg md:text-xl text-[#543245] font-medium leading-relaxed tracking-wide"
           >
-            2 years of unforgettable Bukit sunsets, legendary pool parties, and wild sends. On{" "}
+            2 years of unforgettable Bukit sunsets, foam pool parties, and wild sends. On{" "}
             <span className="text-[#7A2856] font-bold">04.09.26</span>, we celebrate every late night, every lifelong friend, and every questionable decision made under the Uluwatu stars.
           </motion.p>
 
@@ -827,20 +811,20 @@ export function AnniversaryUluwatuClient() {
       <section id="video" className="py-12 md:py-20 bg-[#F4EFE6] border-y border-[#7A2856]/15 relative overflow-hidden">
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center justify-center">
-            {/* Left: Poster Artwork Showcase */}
+            {/* Left: Poster Artwork Showcase (LDU-Anniversary-A3) */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="lg:col-span-6 relative aspect-[9/16] sm:aspect-[4/5] max-w-sm sm:max-w-md mx-auto w-full rounded-2xl overflow-hidden border-[3px] border-[#7A2856]/30 shadow-[0_15px_40px_rgba(122,40,86,0.15)] bg-white group"
+              className="lg:col-span-6 relative aspect-[1/1.414] max-w-sm sm:max-w-md mx-auto w-full rounded-2xl overflow-hidden border-[3px] border-[#7A2856]/30 shadow-[0_15px_40px_rgba(122,40,86,0.15)] bg-white group"
             >
               <Image
                 src={ASSETS.mainPoster}
-                alt="2 Years of Lay Day Uluwatu Poster"
+                alt="2 Years of Lay Day Uluwatu Official Poster"
                 fill
                 priority
-                className="object-cover group-hover:scale-105 transition-transform duration-700"
+                className="object-contain p-1 group-hover:scale-[1.02] transition-transform duration-700"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </motion.div>
@@ -886,220 +870,261 @@ export function AnniversaryUluwatuClient() {
         </div>
       </section>
 
-      {/* ── 3. INTERACTIVE "WHEEL OF REGRET" MINI-GAME ── */}
-      <section id="wheel" className="py-20 md:py-32 bg-[#FAF8F2] relative overflow-hidden">
+      {/* ── 3. OFFICIAL ULUWATU HIGHLIGHTS & GUEST CHALLENGE BOARD (Replacing Wheel of Regret) ── */}
+      <section id="highlights" className="py-20 md:py-32 bg-[#FAF8F2] relative overflow-hidden">
         <div className="max-w-6xl mx-auto px-4 relative z-10">
           <div className="text-center mb-12 md:mb-16 space-y-4">
             <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-[#7A2856]/10 border border-[#7A2856]/30 text-[#7A2856] text-xs font-extrabold uppercase tracking-[3px]">
-              <RotateCw className="w-3.5 h-3.5 animate-spin-slow" /> FEATURED ALL-DAY EVENT
+              <Sparkles className="w-3.5 h-3.5" /> 2ND ANNIVERSARY SIGNATURE HIGHLIGHTS
             </div>
             <h2 className="text-4xl md:text-7xl font-heading tracking-widest uppercase text-[#7A2856] leading-none">
-              THE WHEEL OF <span className="text-[#C4276A]">REGRET</span>
+              THE OFFICIAL <span className="text-[#C4276A]">EXPERIENCE</span>
             </h2>
-            <p className="text-base md:text-lg text-[#543245] max-w-xl mx-auto font-medium">
-              Spin the official Lay Day Wheel of Regret to test your luck! Dares, free shots, group waterfalls, or instant hostel fame.
+            <p className="text-base md:text-lg text-[#543245] max-w-2xl mx-auto font-medium">
+              From the 3 PM giant foam pool takeover to the 9:30 PM sparkler countdown, here are the signature moments powering our biggest celebration of the year!
             </p>
           </div>
 
-          <div className="flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-16">
-            {/* The Interactive Wheel Container */}
-            <div className="relative flex flex-col items-center">
-              {/* Pointer / Flapper Indicator */}
-              <div className="absolute -top-6 z-30 flex flex-col items-center filter drop-shadow-[0_4px_10px_rgba(122,40,86,0.5)]">
-                <div className="w-0 h-0 border-l-[18px] border-l-transparent border-r-[18px] border-r-transparent border-t-[32px] border-t-[#7A2856]" />
+          {/* 3 Pillar Feature Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+            {/* Card 1: Giant Foam Party */}
+            <motion.div
+              whileHover={{ y: -6 }}
+              className="p-6 md:p-8 rounded-2xl bg-white border border-[#7A2856]/15 shadow-md flex flex-col justify-between relative overflow-hidden group"
+            >
+              <div className="absolute top-0 right-0 w-24 h-24 bg-[#C4276A]/10 rounded-full blur-2xl pointer-events-none" />
+              <div className="space-y-4">
+                <div className="w-14 h-14 rounded-2xl bg-[#C4276A]/10 border border-[#C4276A]/30 flex items-center justify-center text-3xl">
+                  🫧
+                </div>
+                <div className="space-y-1">
+                  <span className="text-[11px] font-extrabold uppercase tracking-[2px] text-[#C4276A]">
+                    3:00 PM – 6:00 PM • POOL TAKEOVER
+                  </span>
+                  <h3 className="font-heading text-2xl md:text-3xl tracking-wide uppercase text-[#7A2856]">
+                    THE GIANT FOAM POOL PARTY
+                  </h3>
+                </div>
+                <p className="text-xs md:text-sm text-[#543245] leading-relaxed">
+                  High-powered foam cannons flooding the entire Uluwatu pool! Dive into mountains of bubbles, iced cocktail buckets, pool inflatables, and sunny poolside bangers.
+                </p>
+              </div>
+              <div className="mt-6 pt-4 border-t border-[#7A2856]/10 flex items-center justify-between text-xs font-bold text-[#7A2856]">
+                <span>★ Foam Cannons Ready</span>
+                <span className="text-[#C4276A]">Bring Swimwear</span>
+              </div>
+            </motion.div>
+
+            {/* Card 2: 9:30 PM Sparkler Countdown */}
+            <motion.div
+              whileHover={{ y: -6 }}
+              className="p-6 md:p-8 rounded-2xl bg-white border border-[#7A2856]/15 shadow-md flex flex-col justify-between relative overflow-hidden group"
+            >
+              <div className="absolute top-0 right-0 w-24 h-24 bg-[#E5AB3A]/10 rounded-full blur-2xl pointer-events-none" />
+              <div className="space-y-4">
+                <div className="w-14 h-14 rounded-2xl bg-[#E5AB3A]/15 border border-[#E5AB3A]/40 flex items-center justify-center text-3xl">
+                  🎂
+                </div>
+                <div className="space-y-1">
+                  <span className="text-[11px] font-extrabold uppercase tracking-[2px] text-[#E5AB3A]">
+                    9:30 PM • SIGNATURE CLIMAX
+                  </span>
+                  <h3 className="font-heading text-2xl md:text-3xl tracking-wide uppercase text-[#7A2856]">
+                    SPARKLER COUNTDOWN & CAKE
+                  </h3>
+                </div>
+                <p className="text-xs md:text-sm text-[#543245] leading-relaxed">
+                  The music pauses as the MC leads a massive 10-second countdown (10...9...1!). Giant celebration magnum bottles pop, handheld sparklers ignite for every guest, and we cut the 2-Year Cake.
+                </p>
+              </div>
+              <div className="mt-6 pt-4 border-t border-[#7A2856]/10 flex items-center justify-between text-xs font-bold text-[#7A2856]">
+                <span>★ Free Handheld Sparklers</span>
+                <span className="text-[#E5AB3A]">All Guests Unite</span>
+              </div>
+            </motion.div>
+
+            {/* Card 3: Free Canapes & Photo Booth */}
+            <motion.div
+              whileHover={{ y: -6 }}
+              className="p-6 md:p-8 rounded-2xl bg-white border border-[#7A2856]/15 shadow-md flex flex-col justify-between relative overflow-hidden group"
+            >
+              <div className="absolute top-0 right-0 w-24 h-24 bg-[#7A2856]/10 rounded-full blur-2xl pointer-events-none" />
+              <div className="space-y-4">
+                <div className="w-14 h-14 rounded-2xl bg-[#7A2856]/10 border border-[#7A2856]/30 flex items-center justify-center text-3xl">
+                  📸
+                </div>
+                <div className="space-y-1">
+                  <span className="text-[11px] font-extrabold uppercase tracking-[2px] text-[#7A2856]">
+                    ALL DAY & NIGHT
+                  </span>
+                  <h3 className="font-heading text-2xl md:text-3xl tracking-wide uppercase text-[#7A2856]">
+                    PHOTO BOOTH & FREE CANAPÉS
+                  </h3>
+                </div>
+                <p className="text-xs md:text-sm text-[#543245] leading-relaxed">
+                  Complimentary gourmet canapés served from 8:00 PM. Plus a branded vintage Photo Booth and illuminated 2-Year Anniversary Mirror Photo Op Wall for instant souvenir strips!
+                </p>
+              </div>
+              <div className="mt-6 pt-4 border-t border-[#7A2856]/10 flex items-center justify-between text-xs font-bold text-[#7A2856]">
+                <span>★ Free Canapés at 8 PM</span>
+                <span className="text-[#7A2856]">Instant Souvenir Prints</span>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* ── INTERACTIVE GUEST CHALLENGE BOARD ── */}
+          <div className="p-6 md:p-10 rounded-3xl bg-white border-2 border-[#7A2856]/25 shadow-xl relative overflow-hidden">
+            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-8 border-b border-[#7A2856]/15">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#7A2856]/10 text-[#7A2856] text-[11px] font-extrabold uppercase tracking-[2px] mb-2">
+                  <Trophy className="w-3.5 h-3.5" /> GUEST DELIVERABLE
+                </div>
+                <h3 className="font-heading text-3xl md:text-5xl uppercase tracking-wider text-[#7A2856]">
+                  THE OFFICIAL GUEST CHALLENGE BOARD
+                </h3>
+                <p className="text-xs md:text-sm text-[#543245] max-w-xl font-medium mt-1">
+                  Every guest receives a physical Challenge Board card on arrival! Click each challenge below to preview the tasks and collect your virtual stamps.
+                </p>
               </div>
 
-              {/* The Wheel */}
-              <div className="relative w-[320px] sm:w-[420px] md:w-[460px] aspect-square rounded-full p-3 bg-gradient-to-b from-[#7A2856] via-[#C4276A] to-[#E5AB3A] shadow-[0_15px_50px_rgba(122,40,86,0.25)] border-[4px] border-white">
-                <div
-                  style={{
-                    transform: `rotate(${wheelRotation}deg)`,
-                    transition: isSpinning
-                      ? "transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99)"
-                      : "none",
-                  }}
-                  className="relative w-full h-full rounded-full overflow-hidden bg-white shadow-inner"
-                >
-                  <svg viewBox="0 0 100 100" className="w-full h-full">
-                    {WHEEL_SEGMENTS.map((seg, i) => {
-                      const total = WHEEL_SEGMENTS.length;
-                      const angle = 360 / total;
-                      const startAngle = i * angle;
-                      const endAngle = (i + 1) * angle;
-
-                      // SVG polar to cartesian
-                      const x1 = 50 + 50 * Math.cos((Math.PI * (startAngle - 90)) / 180);
-                      const y1 = 50 + 50 * Math.sin((Math.PI * (startAngle - 90)) / 180);
-                      const x2 = 50 + 50 * Math.cos((Math.PI * (endAngle - 90)) / 180);
-                      const y2 = 50 + 50 * Math.sin((Math.PI * (endAngle - 90)) / 180);
-
-                      const pathData = `M 50 50 L ${x1} ${y1} A 50 50 0 0 1 ${x2} ${y2} Z`;
-                      const textAngle = startAngle + angle / 2;
-
-                      return (
-                        <g key={i}>
-                          <path
-                            d={pathData}
-                            fill={seg.color}
-                            stroke="#FAF8F2"
-                            strokeWidth="0.8"
-                            className="transition-colors hover:brightness-110"
-                          />
-                          <g transform={`rotate(${textAngle}, 50, 50)`}>
-                            <text
-                              x="50"
-                              y="16"
-                              fill="#FFF"
-                              fontSize="3.8"
-                              fontWeight="900"
-                              letterSpacing="0.2"
-                              textAnchor="middle"
-                              transform={`rotate(90, 50, 16)`}
-                              className="font-heading uppercase select-none drop-shadow-sm"
-                            >
-                              {seg.label}
-                            </text>
-                            <text
-                              x="50"
-                              y="28"
-                              fill="#FFF"
-                              fontSize="5.5"
-                              textAnchor="middle"
-                              transform={`rotate(90, 50, 28)`}
-                            >
-                              {seg.icon}
-                            </text>
-                          </g>
-                        </g>
-                      );
-                    })}
-                  </svg>
-                </div>
-
-                {/* Center Hub / Spin Button */}
-                <button
-                  onClick={spinTheWheel}
-                  disabled={isSpinning}
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 sm:w-24 md:w-28 aspect-square rounded-full bg-[#7A2856] border-[4px] border-white text-white flex flex-col items-center justify-center font-heading text-sm sm:text-base tracking-widest uppercase shadow-[0_4px_20px_rgba(122,40,86,0.6)] hover:scale-105 active:scale-95 transition-transform disabled:opacity-80 z-20"
-                >
-                  <span className="text-white font-extrabold">
-                    {isSpinning ? "SPINNING" : "SPIN"}
+              <div className="flex items-center gap-3 bg-[#FAF8F2] border border-[#7A2856]/20 px-5 py-3 rounded-2xl self-stretch lg:self-auto justify-between">
+                <div>
+                  <span className="text-[10px] uppercase font-bold text-[#7A2856]/70 tracking-widest block">
+                    STAMPS COLLECTED
                   </span>
-                  <span className="text-[9px] tracking-[2px] text-white/80">WHEEL</span>
-                </button>
+                  <span className="text-2xl font-heading text-[#7A2856] font-bold">
+                    {completedChallenges.length} / {GUEST_CHALLENGES.length}
+                  </span>
+                </div>
+                <Button
+                  onClick={() => setFormOpen(true)}
+                  className="bg-[#7A2856] hover:bg-[#5E193E] text-white font-extrabold uppercase tracking-wider text-xs h-10 px-4 rounded-lg"
+                >
+                  GET YOUR BOARD AT DOOR
+                </Button>
               </div>
             </div>
 
-            {/* Right: Outcome Rules & Instant Action */}
-            <div className="max-w-md w-full space-y-6">
-              <div className="p-6 rounded-2xl bg-white border border-[#7A2856]/15 shadow-xl space-y-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#7A2856] text-white flex items-center justify-center font-bold text-lg">
-                    ⚡
-                  </div>
-                  <div>
-                    <h3 className="font-heading text-2xl tracking-wider uppercase text-[#7A2856]">
-                      HOW IT WORKS AT THE PARTY
-                    </h3>
-                    <p className="text-xs text-[#7A2856]/70 uppercase tracking-widest">
-                      Every hour on the anniversary day
-                    </p>
-                  </div>
-                </div>
-                <p className="text-sm text-[#543245] leading-relaxed">
-                  During the 2nd Anniversary celebration, the physical giant Wheel of Regret will be live at the Uluwatu pool bar! Anyone on the guestlist gets free spins throughout the day to unlock shots, party challenges, and instant prizes.
-                </p>
-                <div className="grid grid-cols-2 gap-3 pt-2">
-                  <div className="p-2.5 rounded bg-[#FAF8F2] border border-[#7A2856]/15 text-xs">
-                    <span className="text-[#7A2856] font-bold block">🍸 Free Shots</span>
-                    <span className="text-[#543245] text-[11px]">Instant bartender pour</span>
-                  </div>
-                  <div className="p-2.5 rounded bg-[#FAF8F2] border border-[#7A2856]/15 text-xs">
-                    <span className="text-[#C4276A] font-bold block">🌊 Waterfalls</span>
-                    <span className="text-[#543245] text-[11px]">Start group chains</span>
-                  </div>
-                  <div className="p-2.5 rounded bg-[#FAF8F2] border border-[#7A2856]/15 text-xs">
-                    <span className="text-[#E5AB3A] font-bold block">🕺 Dance Offs</span>
-                    <span className="text-[#543245] text-[11px]">30 sec deck show</span>
-                  </div>
-                  <div className="p-2.5 rounded bg-[#FAF8F2] border border-[#7A2856]/15 text-xs">
-                    <span className="text-[#9C3B6E] font-bold block">🃏 Mystery Dares</span>
-                    <span className="text-[#543245] text-[11px]">Hostel legend status</span>
-                  </div>
-                </div>
+            {/* Grid of 6 Interactive Challenge Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-8">
+              {GUEST_CHALLENGES.map((challenge) => {
+                const isStamped = completedChallenges.includes(challenge.id);
 
-                <Button
-                  onClick={spinTheWheel}
-                  disabled={isSpinning}
-                  className="w-full bg-[#7A2856] hover:bg-[#5E193E] text-white font-extrabold uppercase tracking-[3px] text-xs h-12 rounded-none transition-all shadow-[0_4px_15px_rgba(122,40,86,0.3)]"
-                >
-                  <RotateCw
-                    className={`w-4 h-4 mr-2 ${isSpinning ? "animate-spin" : ""}`}
-                  />
-                  {isSpinning ? "SPINNING THE REGRET..." : "TAKE A TEST SPIN NOW"}
-                </Button>
-              </div>
+                return (
+                  <motion.div
+                    key={challenge.id}
+                    whileHover={{ scale: 1.02 }}
+                    onClick={() => toggleChallengeStamp(challenge.id)}
+                    className={`p-5 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between select-none ${
+                      isStamped
+                        ? "bg-gradient-to-br from-[#7A2856]/5 via-[#C4276A]/5 to-[#E5AB3A]/10 border-[#7A2856] shadow-sm"
+                        : "bg-[#FAF8F2] border-[#7A2856]/15 hover:border-[#7A2856]/40"
+                    }`}
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="text-2xl">{challenge.icon}</span>
+                        <span
+                          className={`text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full border transition-colors ${
+                            isStamped
+                              ? "bg-[#7A2856] text-white border-[#7A2856]"
+                              : "bg-white text-[#7A2856] border-[#7A2856]/20"
+                          }`}
+                        >
+                          {isStamped ? "✓ STAMP COLLECTED" : "CLICK TO STAMP"}
+                        </span>
+                      </div>
+
+                      <h4 className="font-heading text-xl text-[#7A2856] uppercase tracking-wide mb-1">
+                        {challenge.title}
+                      </h4>
+                      <span className="text-[10px] font-bold text-[#C4276A] uppercase tracking-widest block mb-2">
+                        {challenge.category}
+                      </span>
+                      <p className="text-xs text-[#543245] leading-relaxed font-medium">
+                        {challenge.description}
+                      </p>
+                    </div>
+
+                    <div className="mt-4 pt-3 border-t border-[#7A2856]/10 flex items-center justify-between text-[11px] font-bold text-[#7A2856]">
+                      <span>{challenge.reward}</span>
+                      <span className="text-base">{isStamped ? "🏆" : "⭕"}</span>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+
+            {/* Bottom Notice */}
+            <div className="mt-6 p-4 rounded-xl bg-[#FAF8F2] border border-[#7A2856]/15 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+              <span className="text-xs text-[#543245] font-medium">
+                ★ Complete your board on 04.09.26 to redeem limited edition merchandise, free shot tokens, and enter the Anniversary Grand Prize Draw!
+              </span>
+              <Button
+                onClick={() => setFormOpen(true)}
+                className="bg-[#C4276A] hover:bg-[#A81E57] text-white font-extrabold uppercase tracking-[2px] text-xs h-10 px-5 flex-shrink-0"
+              >
+                JOIN GUESTLIST & GET FREE SHOT 🍸
+              </Button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Wheel Result Reward Modal with Screenshot Instruction */}
-      <Dialog open={wheelModalOpen} onOpenChange={setWheelModalOpen}>
-        <DialogContent className="sm:max-w-md bg-[#FAF8F2] border-[3px] border-[#7A2856] text-[#2E1824] rounded-none p-6 md:p-8 text-center shadow-[0_20px_50px_rgba(122,40,86,0.3)]">
-          <DialogHeader>
-            <div className="w-16 h-16 rounded-full bg-[#7A2856] text-white text-3xl flex items-center justify-center mx-auto mb-3 shadow-md">
-              {selectedReward?.icon || "🎉"}
-            </div>
-            <DialogTitle className="text-3xl md:text-4xl font-heading tracking-widest text-[#7A2856] uppercase">
-              {selectedReward?.label}
-            </DialogTitle>
-            <DialogDescription className="text-xs uppercase tracking-[3px] text-[#7A2856]/80 font-bold">
-              {selectedReward?.sub}
-            </DialogDescription>
-          </DialogHeader>
+      {/* ── 4. DJ LINE-UP SHOWCASE ── */}
+      <section className="py-16 bg-[#F4EFE6] border-y border-[#7A2856]/15">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-10 space-y-2">
+            <span className="text-xs font-extrabold tracking-[3px] uppercase text-[#7A2856]">
+              NON-STOP BEATS FROM 2:00 PM TO MIDNIGHT
+            </span>
+            <h3 className="font-heading text-3xl md:text-5xl uppercase tracking-wider text-[#7A2856]">
+              THE ANNIVERSARY <span className="text-[#C4276A]">DJ LINE-UP</span>
+            </h3>
+          </div>
 
-          <div className="py-4 space-y-4">
-            <p className="text-[#543245] text-base md:text-lg font-semibold leading-relaxed">
-              {selectedReward?.description}
-            </p>
-
-            {/* Crucial Screenshot Notice */}
-            <div className="p-4 md:p-5 bg-white border-[2px] border-[#7A2856] rounded-lg text-center space-y-2 shadow-sm">
-              <div className="flex items-center justify-center gap-2 text-[#7A2856] font-black text-sm uppercase tracking-wider">
-                <Camera className="w-5 h-5 animate-pulse text-[#7A2856]" />
-                TAKE A SCREENSHOT OF THIS RESULT!
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {DJ_LINEUP.map((dj, i) => (
+              <div
+                key={i}
+                className="p-6 rounded-2xl bg-white border border-[#7A2856]/15 shadow-sm space-y-3 flex flex-col justify-between"
+              >
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span
+                      className="text-[10px] font-extrabold uppercase tracking-[2px] px-2.5 py-1 rounded border"
+                      style={{
+                        backgroundColor: `${dj.color}15`,
+                        color: dj.color,
+                        borderColor: `${dj.color}40`,
+                      }}
+                    >
+                      {dj.badge}
+                    </span>
+                    <span className="text-xs font-mono font-bold text-[#7A2856]/70">
+                      {dj.time}
+                    </span>
+                  </div>
+                  <h4 className="font-heading text-3xl text-[#7A2856] uppercase tracking-wide">
+                    DJ {dj.name}
+                  </h4>
+                  <span className="text-xs font-bold text-[#C4276A] uppercase tracking-wider block">
+                    {dj.genre}
+                  </span>
+                  <p className="text-xs text-[#543245] leading-relaxed">
+                    {dj.description}
+                  </p>
+                </div>
               </div>
-              <p className="text-xs md:text-sm text-[#543245] font-medium leading-relaxed">
-                Show this screenshot at the door when giving your name on the guestlist to claim this reward / challenge!
-              </p>
-            </div>
+            ))}
           </div>
+        </div>
+      </section>
 
-          <div className="flex flex-col sm:flex-row gap-3 pt-2">
-            <Button
-              onClick={() => {
-                setWheelModalOpen(false);
-                setFormOpen(true);
-              }}
-              className="flex-1 bg-[#7A2856] hover:bg-[#5E193E] text-white font-extrabold uppercase tracking-[3px] text-xs h-13 rounded-none transition-all shadow-md"
-            >
-              CLAIM GUESTLIST & FREE SHOT 🍸
-            </Button>
-            <button
-              onClick={() => setWheelModalOpen(false)}
-              className="px-6 h-13 bg-white hover:bg-[#F4EFE6] text-[#7A2856] border border-[#7A2856]/30 font-bold uppercase tracking-wider text-xs transition-colors"
-            >
-              CLOSE
-            </button>
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      {/* ── 4. "BAD DECISIONS MAKE GOOD STORIES" TEAR-OFF BOARD (White Paper Flyer Theme) ── */}
+      {/* ── 5. "BAD DECISIONS MAKE GOOD STORIES" TEAR-OFF BOARD (Flyer Theme) ── */}
       <section
         id="confessions"
-        className="py-20 md:py-32 bg-[#F4EFE6] border-t border-[#7A2856]/15 relative overflow-hidden"
+        className="py-20 md:py-32 bg-[#FAF8F2] relative overflow-hidden"
       >
         <div className="max-w-6xl mx-auto px-4 relative z-10">
           <div className="text-center mb-12 md:mb-16 space-y-4">
@@ -1110,7 +1135,7 @@ export function AnniversaryUluwatuClient() {
               BAD DECISIONS <span className="text-[#C4276A]">CONFESSION BOARD</span>
             </h2>
             <p className="text-base md:text-lg text-[#543245] max-w-2xl mx-auto font-medium">
-              We pulled the top questions directly from the official Lay Day Uluwatu tear-off flyer! Click any card below to tear off a confession and cast your verdict.
+              We pulled the top questions directly from the official Lay Day Uluwatu tear-off flyer! Click any card below to cast your verdict.
             </p>
           </div>
 
@@ -1207,11 +1232,11 @@ export function AnniversaryUluwatuClient() {
               <p className="text-xs md:text-sm text-[#543245] max-w-xl">
                 Submit your wildest Lay Day Uluwatu memory on Instagram with hashtag{" "}
                 <span className="text-[#7A2856] font-bold">#BadChoicesMakeGoodStories</span> or tag{" "}
-                <span className="text-[#C4276A] font-bold">@laydayuluwatu</span> to be featured during the Legends Awards!
+                <span className="text-[#C4276A] font-bold">@staylayday</span> to be featured during the celebration!
               </p>
             </div>
             <a
-              href="https://www.instagram.com/laydayuluwatu/"
+              href="https://www.instagram.com/staylayday/"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 bg-[#7A2856] hover:bg-[#5E193E] text-white font-extrabold uppercase tracking-[3px] text-xs px-6 h-12 shadow-md transition-all flex-shrink-0"
@@ -1222,21 +1247,21 @@ export function AnniversaryUluwatuClient() {
         </div>
       </section>
 
-      {/* ── 5. FULL-DAY EVENT SCHEDULE & PROGRAM ── */}
+      {/* ── 6. FULL-DAY EVENT SCHEDULE & PROGRAM (From PDF) ── */}
       <section
         id="schedule"
-        className="py-20 md:py-32 bg-[#FAF8F2] border-t border-[#7A2856]/15 relative overflow-hidden"
+        className="py-20 md:py-32 bg-[#F4EFE6] border-t border-[#7A2856]/15 relative overflow-hidden"
       >
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-16 space-y-4">
             <span className="text-xs font-extrabold tracking-[4px] uppercase text-[#7A2856]">
-              EVENT PROGRAM & LINEUP
+              OFFICIAL EVENT PROGRAM & LINEUP
             </span>
             <h2 className="text-4xl md:text-7xl font-heading tracking-widest uppercase text-[#7A2856] leading-none">
               THE 2ND <span className="text-[#C4276A]">ANNIVERSARY SCHEDULE</span>
             </h2>
             <p className="text-base md:text-lg text-[#543245] max-w-2xl mx-auto font-medium">
-              From 12:00 PM kick-off to the late-night pool party, here is how we’re celebrating 2 years in Uluwatu.
+              From 2:00 PM doors open to the 9:30 PM sparkler countdown and midnight finale, here is the official program.
             </p>
           </div>
 
@@ -1252,10 +1277,10 @@ export function AnniversaryUluwatuClient() {
                 className="p-6 md:p-8 rounded-xl bg-white border border-[#7A2856]/15 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col md:flex-row gap-6 md:items-center justify-between group"
               >
                 {/* Time & Badge */}
-                <div className="flex flex-col md:w-56 flex-shrink-0">
+                <div className="flex flex-col md:w-64 flex-shrink-0">
                   <div className="flex items-center gap-2 mb-1">
                     <Clock className="w-4 h-4 text-[#7A2856]" />
-                    <span className="font-heading text-3xl md:text-4xl tracking-wider text-[#7A2856] group-hover:text-[#C4276A] transition-colors">
+                    <span className="font-heading text-2xl md:text-3xl tracking-wider text-[#7A2856] group-hover:text-[#C4276A] transition-colors">
                       {item.time}
                     </span>
                   </div>
@@ -1284,42 +1309,6 @@ export function AnniversaryUluwatuClient() {
                   </p>
                 </div>
               </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── 6. PASSPORT CHALLENGE SHOWCASE ── */}
-      <section className="py-20 bg-[#F4EFE6] border-t border-[#7A2856]/15 relative overflow-hidden">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12 md:mb-16 space-y-4">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-[#7A2856]/20 text-[#7A2856] text-xs font-extrabold uppercase tracking-[3px] shadow-sm">
-              <Trophy className="w-4 h-4" /> ALL-DAY FESTIVAL PASSPORT
-            </div>
-            <h2 className="text-4xl md:text-6xl font-heading tracking-widest uppercase text-[#7A2856]">
-              12 DARES. <span className="text-[#C4276A]">ENDLESS GLORY.</span>
-            </h2>
-            <p className="text-sm md:text-base text-[#543245] max-w-xl mx-auto font-medium">
-              Collect stamps on your physical Anniversary Passport to win free shots and unlock entry into the 2nd Anniversary Grand Prize Draw!
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {PASSPORT_CHALLENGES.map((challenge, i) => (
-              <div
-                key={i}
-                className="p-4 rounded-xl bg-white border border-[#7A2856]/15 hover:border-[#7A2856]/50 transition-all flex flex-col items-center text-center space-y-2 shadow-sm group"
-              >
-                <span className="text-3xl mb-1 group-hover:scale-125 transition-transform duration-300">
-                  {challenge.icon}
-                </span>
-                <h4 className="font-heading text-lg md:text-xl text-[#7A2856] tracking-wide uppercase">
-                  {challenge.title}
-                </h4>
-                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#C4276A]">
-                  {challenge.points}
-                </span>
-              </div>
             ))}
           </div>
         </div>
@@ -1370,28 +1359,28 @@ export function AnniversaryUluwatuClient() {
               </div>
             </motion.div>
 
-            {/* Offer 2: Flash Happy Hours */}
+            {/* Offer 2: Watermelon Campaign & Raffle */}
             <motion.div
               whileHover={{ y: -8 }}
               className="p-8 rounded-2xl bg-white border border-[#7A2856]/20 shadow-md flex flex-col justify-between"
             >
               <div className="space-y-4">
                 <div className="w-12 h-12 rounded-xl bg-[#C4276A] text-white flex items-center justify-center font-bold text-2xl shadow-sm">
-                  ⚡
+                  🍉
                 </div>
                 <span className="text-[10px] font-extrabold uppercase tracking-[3px] text-[#C4276A]">
-                  HOURLY FLASH DEALS
+                  NEW CAMPAIGN LAUNCH
                 </span>
                 <h3 className="font-heading text-3xl md:text-4xl tracking-wide uppercase text-[#7A2856]">
-                  FLASH HAPPY HOURS
+                  WATERMELON DRINK & RAFFLE
                 </h3>
                 <p className="text-xs md:text-sm text-[#543245] leading-relaxed font-medium">
-                  Every single hour from 12:00 PM till late, the siren sounds: for quick flash windows, selected beers and shots are slashed in price!
+                  Launch of our brand new Watermelon campaign drink! Purchase the promotional cocktail and receive an official raffle ticket for the mystery grand prize draw.
                 </p>
               </div>
               <div className="mt-8 pt-4 border-t border-[#7A2856]/15">
                 <span className="text-xs font-bold text-[#7A2856] uppercase tracking-wider block">
-                  ★ Slashes Prices Every Hour on the Hour
+                  ★ Every Drink Includes 1x Raffle Entry
                 </span>
               </div>
             </motion.div>
@@ -1438,7 +1427,7 @@ export function AnniversaryUluwatuClient() {
             </span>
           </h2>
           <p className="text-base sm:text-xl text-[#543245] font-medium max-w-2xl mx-auto leading-relaxed">
-            Join the official Lay Day Uluwatu 2nd Anniversary guestlist now to lock your spot, claim your free welcome house shot upon arrival, and unlock physical Wheel of Regret spin tokens.
+            Join the official Lay Day Uluwatu 2nd Anniversary guestlist now to lock your spot, claim your free welcome house shot upon arrival, and participate in the Foam Pool Party and 9:30 PM Sparkler Countdown.
           </p>
 
           <div className="pt-4 flex flex-col items-center justify-center gap-3">
@@ -1479,12 +1468,12 @@ export function AnniversaryUluwatuClient() {
 
           <div className="flex items-center gap-6 text-xs font-bold uppercase tracking-[2px]">
             <a
-              href="https://www.instagram.com/laydayuluwatu/"
+              href="https://www.instagram.com/staylayday/"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 text-white/90 hover:text-[#E5AB3A] transition-colors"
             >
-              <FaInstagram className="w-4 h-4" /> @laydayuluwatu
+              <FaInstagram className="w-4 h-4" /> @staylayday
             </a>
           </div>
 

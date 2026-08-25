@@ -17,9 +17,17 @@ export async function POST(req: NextRequest) {
     }
 
     const payload = {
-      ...body,
+      timestamp: body.timestamp || new Date().toISOString(),
+      name: body.name || "",
+      email: body.email || "",
       phone: phoneStr,
+      location: body.location || "Lay Day Canggu (The OG)",
+      nationality: body.nationality || "",
+      group_size: body.group_size || "1",
+      spin_result: body.spin_result || "Free Shot On Entry",
+      ...body,
     };
+    payload.phone = phoneStr;
 
     if (APPS_SCRIPT_URL) {
       const res = await fetch(APPS_SCRIPT_URL, {

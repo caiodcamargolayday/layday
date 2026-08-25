@@ -23,6 +23,7 @@ export async function POST(req: NextRequest) {
       email: body.email || "",
       phone: phoneStr,
       location: body.location || "Lay Day Uluwatu",
+      nationality: body.nationality || "",
       spin_result: body.spin_result || "Free Shot On Entry",
     };
 

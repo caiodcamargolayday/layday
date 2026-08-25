@@ -204,8 +204,13 @@ const FORM_QUESTIONS: FormQuestion[] = [
     opts: [
       "Lay Day Canggu (The OG)",
       "Lay Day Gili T",
-      "Both Locations (Canggu & Gili T)",
     ],
+  },
+  {
+    type: "text",
+    q: "What is your nationality?",
+    placeholder: "e.g. Australia, Germany, Brazil...",
+    sub: "Tell us where in the world you're joining us from.",
   },
 ];
 
@@ -234,6 +239,7 @@ function ConversationalFormModal({
     const email = finalAnswers[1] || "";
     const phone = finalAnswers[2] || "";
     const location = finalAnswers[3] || "Lay Day Canggu (The OG)";
+    const nationality = finalAnswers[4] || "";
 
     // 1. Submit to Google Sheets via Next.js API route
     try {
@@ -246,6 +252,7 @@ function ConversationalFormModal({
           email,
           phone,
           location,
+          nationality,
           group_size: "1",
           spin_result: spinReward || "Free Shot On Entry",
         }),
@@ -254,9 +261,9 @@ function ConversationalFormModal({
       console.error("Sheet API error:", err);
     }
 
-    // 2. Submit to Meta CAPI
+    // 2. Submit to Meta CAPI (Lead Event)
     try {
-      await fetch("/api/meta-capi/contact", {
+      await fetch("/api/meta-capi/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -266,6 +273,7 @@ function ConversationalFormModal({
           phone,
           firstName: name.split(" ")[0] || name,
           lastName: name.split(" ").slice(1).join(" ") || undefined,
+          contentName: `11 Years Lay Day - ${location}`,
         }),
       });
     } catch (err) {
