@@ -87,19 +87,19 @@ const GUEST_CHALLENGES: ChallengeItem[] = [
   },
   {
     id: 5,
-    title: "Order the Watermelon Campaign Drink",
-    category: "F&B Special",
-    icon: "🍉",
-    description: "Taste the brand new promotional watermelon cocktail and receive your prize raffle ticket.",
-    reward: "+1 Stamp • 1x Raffle Entry",
+    title: "Grab Free Gourmet Canapés",
+    category: "8 PM Food Station",
+    icon: "🍢",
+    description: "Enjoy fresh complimentary gourmet canapés served live across the venue.",
+    reward: "+1 Stamp • Foodie Legend",
   },
   {
     id: 6,
-    title: "Light a Sparkler at 9:30 PM Countdown",
-    category: "Signature Moment",
-    icon: "✨",
-    description: "Join the 10-second MC countdown, giant cake cutting, and sparkler celebration with everyone.",
-    reward: "+1 Stamp • Anniversary Memory",
+    title: "Dance to DJ Jaka's Midnight Send",
+    category: "Late Night Climax",
+    icon: "🎧",
+    description: "Stay locked on the dancefloor for the ultimate high-energy midnight send.",
+    reward: "+1 Stamp • Closing Survivor",
   },
 ];
 
@@ -238,15 +238,6 @@ const SCHEDULE = [
     color: "#7A2856",
     description:
       "DJ JAKA delivers the ultimate high-energy late-night experience with non-stop party anthems, commercial bangers, and electric dancefloor energy.",
-  },
-  {
-    time: "9:30 PM",
-    title: "OFFICIAL ANNIVERSARY MOMENT & CAKE CUTTING",
-    subtitle: "MC 10s Countdown, Sparklers & Magnum Champagne Pop",
-    badge: "9:30 PM • Main Climax",
-    color: "#C4276A",
-    description:
-      "The music pauses for the biggest moment of the year! The MC leads the venue in a huge 10-second countdown (10... 9... 8... 3... 2... 1!), cutting the giant anniversary cake with handheld sparklers distributed to all guests and magnum celebration bottles!",
   },
 ];
 
@@ -881,12 +872,12 @@ export function AnniversaryUluwatuClient() {
               THE OFFICIAL <span className="text-[#C4276A]">EXPERIENCE</span>
             </h2>
             <p className="text-base md:text-lg text-[#543245] max-w-2xl mx-auto font-medium">
-              From the 3 PM giant foam pool takeover to the 9:30 PM sparkler countdown, here are the signature moments powering our biggest celebration of the year!
+              From the 3 PM giant foam pool takeover to complimentary gourmet canapés and photo ops, here are the signature moments powering our biggest celebration of the year!
             </p>
           </div>
 
-          {/* 3 Pillar Feature Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+          {/* 2 Feature Highlights Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16 max-w-4xl mx-auto">
             {/* Card 1: Giant Foam Party */}
             <motion.div
               whileHover={{ y: -6 }}
@@ -915,35 +906,7 @@ export function AnniversaryUluwatuClient() {
               </div>
             </motion.div>
 
-            {/* Card 2: 9:30 PM Sparkler Countdown */}
-            <motion.div
-              whileHover={{ y: -6 }}
-              className="p-6 md:p-8 rounded-2xl bg-white border border-[#7A2856]/15 shadow-md flex flex-col justify-between relative overflow-hidden group"
-            >
-              <div className="absolute top-0 right-0 w-24 h-24 bg-[#E5AB3A]/10 rounded-full blur-2xl pointer-events-none" />
-              <div className="space-y-4">
-                <div className="w-14 h-14 rounded-2xl bg-[#E5AB3A]/15 border border-[#E5AB3A]/40 flex items-center justify-center text-3xl">
-                  🎂
-                </div>
-                <div className="space-y-1">
-                  <span className="text-[11px] font-extrabold uppercase tracking-[2px] text-[#E5AB3A]">
-                    9:30 PM • SIGNATURE CLIMAX
-                  </span>
-                  <h3 className="font-heading text-2xl md:text-3xl tracking-wide uppercase text-[#7A2856]">
-                    SPARKLER COUNTDOWN & CAKE
-                  </h3>
-                </div>
-                <p className="text-xs md:text-sm text-[#543245] leading-relaxed">
-                  The music pauses as the MC leads a massive 10-second countdown (10...9...1!). Giant celebration magnum bottles pop, handheld sparklers ignite for every guest, and we cut the 2-Year Cake.
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-[#7A2856]/10 flex items-center justify-between text-xs font-bold text-[#7A2856]">
-                <span>★ Free Handheld Sparklers</span>
-                <span className="text-[#E5AB3A]">All Guests Unite</span>
-              </div>
-            </motion.div>
-
-            {/* Card 3: Free Canapes & Photo Booth */}
+            {/* Card 2: Free Canapes & Photo Booth */}
             <motion.div
               whileHover={{ y: -6 }}
               className="p-6 md:p-8 rounded-2xl bg-white border border-[#7A2856]/15 shadow-md flex flex-col justify-between relative overflow-hidden group"
@@ -1261,7 +1224,7 @@ export function AnniversaryUluwatuClient() {
               THE 2ND <span className="text-[#C4276A]">ANNIVERSARY SCHEDULE</span>
             </h2>
             <p className="text-base md:text-lg text-[#543245] max-w-2xl mx-auto font-medium">
-              From 2:00 PM doors open to the 9:30 PM sparkler countdown and midnight finale, here is the official program.
+              From 2:00 PM doors open to the midnight finale, here is the official program.
             </p>
           </div>
 
@@ -1314,107 +1277,7 @@ export function AnniversaryUluwatuClient() {
         </div>
       </section>
 
-      {/* ── 7. ANNIVERSARY SPECIALS & LIMITED OFFERS ── */}
-      <section
-        id="offers"
-        className="py-20 md:py-32 bg-[#FAF8F2] border-t border-[#7A2856]/15 relative"
-      >
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-16 space-y-4">
-            <span className="text-xs font-extrabold tracking-[4px] uppercase text-[#7A2856]">
-              ONE DAY ONLY • 04.09.26
-            </span>
-            <h2 className="text-4xl md:text-7xl font-heading tracking-widest uppercase text-[#7A2856] leading-none">
-              ANNIVERSARY <span className="text-[#C4276A]">SPECIAL OFFERS</span>
-            </h2>
-            <p className="text-base md:text-lg text-[#543245] max-w-2xl mx-auto font-medium">
-              Exclusive deals crafted specifically for Lay Day Uluwatu’s 2-Year celebration.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Offer 1: 2 Years Anniversary Buckets */}
-            <motion.div
-              whileHover={{ y: -8 }}
-              className="p-8 rounded-2xl bg-white border border-[#7A2856]/20 shadow-md flex flex-col justify-between"
-            >
-              <div className="space-y-4">
-                <div className="w-12 h-12 rounded-xl bg-[#7A2856] text-white flex items-center justify-center font-bold text-2xl shadow-sm">
-                  🍹
-                </div>
-                <span className="text-[10px] font-extrabold uppercase tracking-[3px] text-[#7A2856]">
-                  LIMITED EDITION
-                </span>
-                <h3 className="font-heading text-3xl md:text-4xl tracking-wide uppercase text-[#7A2856]">
-                  2-YEAR ANNIVERSARY BUCKETS
-                </h3>
-                <p className="text-xs md:text-sm text-[#543245] leading-relaxed font-medium">
-                  The Official Lay Day Uluwatu Anniversary Cocktail Buckets! Crafted to split with your crew around the pool. Available for one day only.
-                </p>
-              </div>
-              <div className="mt-8 pt-4 border-t border-[#7A2856]/15">
-                <span className="text-xs font-bold text-[#7A2856] uppercase tracking-wider block">
-                  ★ Available at Lay Day Uluwatu Bar
-                </span>
-              </div>
-            </motion.div>
-
-            {/* Offer 2: Watermelon Campaign & Raffle */}
-            <motion.div
-              whileHover={{ y: -8 }}
-              className="p-8 rounded-2xl bg-white border border-[#7A2856]/20 shadow-md flex flex-col justify-between"
-            >
-              <div className="space-y-4">
-                <div className="w-12 h-12 rounded-xl bg-[#C4276A] text-white flex items-center justify-center font-bold text-2xl shadow-sm">
-                  🍉
-                </div>
-                <span className="text-[10px] font-extrabold uppercase tracking-[3px] text-[#C4276A]">
-                  NEW CAMPAIGN LAUNCH
-                </span>
-                <h3 className="font-heading text-3xl md:text-4xl tracking-wide uppercase text-[#7A2856]">
-                  WATERMELON DRINK & RAFFLE
-                </h3>
-                <p className="text-xs md:text-sm text-[#543245] leading-relaxed font-medium">
-                  Launch of our brand new Watermelon campaign drink! Purchase the promotional cocktail and receive an official raffle ticket for the mystery grand prize draw.
-                </p>
-              </div>
-              <div className="mt-8 pt-4 border-t border-[#7A2856]/15">
-                <span className="text-xs font-bold text-[#7A2856] uppercase tracking-wider block">
-                  ★ Every Drink Includes 1x Raffle Entry
-                </span>
-              </div>
-            </motion.div>
-
-            {/* Offer 3: Limited Edition Merch */}
-            <motion.div
-              whileHover={{ y: -8 }}
-              className="p-8 rounded-2xl bg-white border border-[#7A2856]/20 shadow-md flex flex-col justify-between"
-            >
-              <div className="space-y-4">
-                <div className="w-12 h-12 rounded-xl bg-[#E5AB3A] text-black flex items-center justify-center font-bold text-2xl shadow-sm">
-                  👕
-                </div>
-                <span className="text-[10px] font-extrabold uppercase tracking-[3px] text-[#7A2856]">
-                  COLLECTOR MERCH
-                </span>
-                <h3 className="font-heading text-3xl md:text-4xl tracking-wide uppercase text-[#7A2856]">
-                  2-YEAR ANNIVERSARY TEE
-                </h3>
-                <p className="text-xs md:text-sm text-[#543245] leading-relaxed font-medium">
-                  Custom 2nd Anniversary collector’s T-shirt featuring the iconic disco cherries visual identity. Limited print run!
-                </p>
-              </div>
-              <div className="mt-8 pt-4 border-t border-[#7A2856]/15">
-                <span className="text-xs font-bold text-[#7A2856] uppercase tracking-wider block">
-                  ★ Limited Run • Never Printed Again
-                </span>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 8. FINAL CTA & RSVP REGISTRATION BANNER ── */}
+      {/* ── 7. FINAL CTA & RSVP REGISTRATION BANNER ── */}
       <section className="py-24 md:py-36 bg-[#F4EFE6] border-t border-[#7A2856]/15 relative text-center overflow-hidden">
         <div className="max-w-4xl mx-auto px-4 relative z-10 space-y-8">
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-[#7A2856]/20 text-[#7A2856] text-xs font-extrabold uppercase tracking-[3px] shadow-sm">
@@ -1427,7 +1290,7 @@ export function AnniversaryUluwatuClient() {
             </span>
           </h2>
           <p className="text-base sm:text-xl text-[#543245] font-medium max-w-2xl mx-auto leading-relaxed">
-            Join the official Lay Day Uluwatu 2nd Anniversary guestlist now to lock your spot, claim your free welcome house shot upon arrival, and participate in the Foam Pool Party and 9:30 PM Sparkler Countdown.
+            Join the official Lay Day Uluwatu 2nd Anniversary guestlist now to lock your spot, claim your free welcome house shot upon arrival, and participate in the Giant Foam Pool Party and late-night celebrations.
           </p>
 
           <div className="pt-4 flex flex-col items-center justify-center gap-3">
@@ -1444,7 +1307,7 @@ export function AnniversaryUluwatuClient() {
         </div>
       </section>
 
-      {/* ── 9. FOOTER ── */}
+      {/* ── 8. FOOTER ── */}
       <footer className="bg-[#240A1A] text-white/70 py-12 px-4 border-t border-white/10">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
           <div className="flex items-center gap-4">
