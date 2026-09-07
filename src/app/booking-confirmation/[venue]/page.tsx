@@ -19,12 +19,51 @@ function ConfirmationLogic() {
 
   useEffect(() => {
     const reservationId = searchParams.get('reservationId') || searchParams.get('reservation_id');
-    const total = searchParams.get('total') || searchParams.get('amount') || '0';
+    const rawTotal =
+      searchParams.get('total') ||
+      searchParams.get('amount') ||
+      searchParams.get('grand_total') ||
+      searchParams.get('reservation_total') ||
+      '0';
     const email = searchParams.get('email');
     const firstName = searchParams.get('firstName') || searchParams.get('first_name');
     const lastName = searchParams.get('lastName') || searchParams.get('last_name');
     const phone = searchParams.get('phone');
     const testEventCode = searchParams.get('testEventCode') || searchParams.get('test_event_code');
+
+    // Sanitize and parse the total, handling both comma- and period-thousands
+    // formats (e.g. "IDR 4.250.000" or "IDR 4,250,000" -> 4250000), not just
+    // plain "1500000".
+    function parseBookingTotal(raw: string | number): number {
+      if (typeof raw === 'number') return raw;
+      let s = String(raw).replace(/[^0-9.,]/g, '');
+      if (!s) return 0;
+
+      const dotCount = (s.match(/\./g) || []).length;
+      const commaCount = (s.match(/,/g) || []).length;
+
+      if (dotCount > 1 && commaCount === 0) {
+        // Multiple periods = thousands separator (e.g. 4.250.000)
+        s = s.replace(/\./g, '');
+      } else if (commaCount > 1 && dotCount === 0) {
+        // Multiple commas = thousands separator (e.g. 4,250,000)
+        s = s.replace(/,/g, '');
+      } else if (dotCount >= 1 && commaCount >= 1) {
+        // Both present: whichever is rightmost is the decimal separator
+        if (s.lastIndexOf('.') > s.lastIndexOf(',')) {
+          s = s.replace(/,/g, '');
+        } else {
+          s = s.replace(/\./g, '').replace(',', '.');
+        }
+      } else if (commaCount === 1) {
+        // Single comma: decimal if 1-2 digits follow, else thousands
+        const afterComma = s.split(',')[1] || '';
+        s = afterComma.length === 3 ? s.replace(',', '') : s.replace(',', '.');
+      }
+
+      const n = Number(s);
+      return isNaN(n) ? 0 : n;
+    }
 
     // Only fire if we have a reservation ID (real booking)
     if (!reservationId) return;
@@ -41,7 +80,7 @@ function ConfirmationLogic() {
     if (sessionStorage.getItem(firedKey)) return;
     sessionStorage.setItem(firedKey, '1');
 
-    const totalValue = parseFloat(total) || 0;
+    const totalValue = parseBookingTotal(rawTotal);
     const venueConfig = CLOUDBEDS_CONFIG[venue];
 
     // 1. Fire Google Ads Browser Conversion (gtag)
