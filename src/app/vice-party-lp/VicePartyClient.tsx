@@ -76,6 +76,12 @@ const VideoPlayer = ({ src }: { src: string }) => {
   );
 };
 
+function getCookie(name: string) {
+  if (typeof document === 'undefined') return null;
+  const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  return match ? match[2] : null;
+}
+
 export function VicePartyClient() {
   const containerRef = useRef(null);
   const [currentImg, setCurrentImg] = useState(0);
@@ -122,19 +128,41 @@ export function VicePartyClient() {
         });
       }
 
-      // 2. Submit to Meta CAPI
+      // 2. Submit to Meta CAPI (Server-Side)
+      const fbp = getCookie('_fbp');
+      const fbc = getCookie('_fbc');
       await fetch('/api/meta-capi/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           origin: 'vice',
           eventSourceUrl: window.location.href,
+          fbp,
+          fbc,
           email: data.email,
           phone: data.phone,
           firstName: data.name.split(' ')[0],
           lastName: data.name.split(' ').slice(1).join(' ') || undefined,
         })
       });
+
+      // 3. Fire Meta Pixel Browser Contact event
+      if (typeof window !== 'undefined' && (window as any).fbq) {
+        (window as any).fbq('track', 'Contact', {
+          content_name: 'Vice Party Guest List',
+          status: 'registered',
+        });
+      }
+
+      // 4. Push to GTM dataLayer
+      if (typeof window !== 'undefined') {
+        (window as any).dataLayer = (window as any).dataLayer || [];
+        (window as any).dataLayer.push({
+          event: 'contact',
+          form_name: 'vice_party_guest_list',
+          event_date: '11.09',
+        });
+      }
 
       setIsSuccess(true);
       (e.target as HTMLFormElement).reset();
