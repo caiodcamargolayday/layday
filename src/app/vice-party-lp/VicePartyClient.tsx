@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 const HERO_IMAGES = [
-  "/vice_party_pictures/LDU-Vice Pool Party-IGF-YOGAVE & ANDIN KATIK.jpg",
+  "/vice_party_pictures/LDU-Vice Pool Party-IGF-GLANDO.jpg",
   "/vice_party_pictures/LDU-Vice Pool Party-IGF-Jaka.jpg"
 ];
 
@@ -102,12 +102,12 @@ export function VicePartyClient() {
         phone: formData.get("phone") as string,
         email: formData.get("email") as string,
         people: formData.get("people") as string,
-        tab: "21.08",
-        sheetName: "21.08",
-        sheet: "21.08",
-        date: "21.08",
-        partyDate: "21.08",
-        event: "21.08 Vice Party",
+        tab: "11.09",
+        sheetName: "11.09",
+        sheet: "11.09",
+        date: "11.09",
+        partyDate: "11.09",
+        event: "11.09 Vice Party",
       };
 
       // 1. Submit to Google Sheets (Apps Script)
@@ -257,8 +257,8 @@ export function VicePartyClient() {
             <h2 className="text-3xl md:text-5xl font-heading tracking-widest uppercase text-white/90">WATCH THE <span className="text-[#FFE500]">MADNESS</span></h2>
           </div>
           <div className="flex flex-col sm:flex-row justify-center items-center gap-10 md:gap-16">
-            <VideoPlayer src="/vice_party_pictures/LDU-Vice Pool Party-Motion (YOGAVE & ANDIN KATIK).mp4" />
-            <VideoPlayer src="/vice_party_pictures/LDU-Vice Pool Party-Motion (JAKA).mp4" />
+            <VideoPlayer src="/vice_party_pictures/LDU-Vice Pool Party-IGS-GLANDO.mp4" />
+            <VideoPlayer src="/vice_party_pictures/LDU-Vice Pool Party-IGS-Jaka.mp4" />
           </div>
         </div>
       </section>
