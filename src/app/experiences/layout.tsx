@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lay Day Experiences | Surf, Party, and Social Rituals",
     description: "Discover the unique experiences that define the Lay Day lifestyle.",
-    images: ["/experiences/saturdays by the pool.jpg"],
+    images: ["/lay_day_home/home_section_4.jpeg"],
   },
 };
 

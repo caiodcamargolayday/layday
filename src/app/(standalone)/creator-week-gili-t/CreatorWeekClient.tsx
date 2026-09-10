@@ -7,21 +7,21 @@ import { ChevronDown, X, Camera, Utensils, Users, Sparkles, ArrowRight, Check } 
 
 // ─── Assets ──────────────────────────────────────────────────────────────────
 const ASSETS = {
-  hero:   "/experiences/golden hour 1.jpg",
-  what:   "/experiences/saturdays by the pool.jpg",
-  look:   "/experiences/golden hour 3.jpg",
+  hero:   "/layday_gilit/hero_gilit_oficial.jpeg",
+  what:   "/layday_gilit/layday_gilit_picture 1.jpg",
+  look:   "/layday_gilit/layday_gilit_picture 3.jpg",
   strip: [
-    "/experiences/golden hour 2.jpg",
-    "/experiences/golden hour 3.jpg",
-    "/experiences/golden hour 4.jpg",
-    "/experiences/golden hour 5.jpg",
-    "/experiences/saturdays by the pool.jpg",
-    "/experiences/dive 1.jpeg",
-    "/experiences/dive 2.jpeg",
-    "/experiences/meals.jpeg",
-    "/experiences/surf_hide_spot.jpeg",
-    "/experiences/hangover_no_text.png",
-    "/experiences/overit_no_text.png",
+    "/layday_gilit/layday_gilit_picture 1.jpg",
+    "/layday_gilit/layday_gilit_picture 2.jpg",
+    "/layday_gilit/layday_gilit_picture 3.jpg",
+    "/layday_gilit/layday_gilit_picture 4.jpg",
+    "/layday_gilit/layday_gilit_picture 5.jpg",
+    "/lay_day_gilit/Turtle_Point_Snorkelling.jpeg",
+    "/lay_day_gilit/Diving_With_Manta_Dive.png",
+    "/lay_day_gilit/outdoor space 3.jpeg",
+    "/lay_day_gilit/Horse_Riding.jpeg",
+    "/lay_day_gilit/party.jpeg",
+    "/lay_day_gilit/Gili_Meno_Island.jpeg",
   ],
 };
 
@@ -567,7 +567,7 @@ export function CreatorWeekClient() {
       {/* ── 6. CTA BANNER ── */}
       <section className="relative bg-[#004A61] text-white py-12 md:py-16 overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-10">
-          <Image src="/experiences/golden hour 4.jpg" alt="" fill className="object-cover grayscale" />
+          <Image src="/lay_day_gilit/outdoor space.jpeg" alt="" fill className="object-cover grayscale" />
         </div>
         <div className="relative z-10 flex flex-col items-center text-center px-4 gap-6">
           <span className="font-bold tracking-[5px] uppercase text-[10px] text-white/60">Limited Spots Available</span>

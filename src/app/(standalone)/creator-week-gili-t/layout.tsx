@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     title: "Gili Creator Week 🌴 | Lay Day Gili T",
     description:
       "Think girls trip, cocktails, snorkelling, social vibes, new friends, and a full content experience — captured professionally.",
-    images: ["/experiences/golden hour 1.jpg"],
+    images: ["/layday_gilit/hero_gilit_oficial.jpeg"],
   },
 };
 
